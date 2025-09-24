@@ -5,6 +5,7 @@ import java.util.List;
 
 import unsw.exceptions.InvalidRouteException;
 import unsw.response.models.*;
+import unsw.utils.TrackType;
 
 /**
  * The controller for the Trains system.
@@ -14,6 +15,7 @@ import unsw.response.models.*;
 public class TrainsController {
 
     private List <Station> stations = new ArrayList<Station>();
+    private List <Track> tracks = new ArrayList<Track>();
 
     public void createStation(String stationId, String type, double x, double y) {
         Station station = null;
@@ -35,7 +37,8 @@ public class TrainsController {
     }
 
     public void createTrack(String trackId, String fromStationId, String toStationId) {
-        // Todo: Task aii
+        Track track = new Track(trackId, fromStationId, toStationId);
+        tracks.add(track);
     }
 
     public void createTrain(String trainId, String type, String stationId, List<String> route)
@@ -52,9 +55,13 @@ public class TrainsController {
     }
 
     public List<String> listTrackIds() {
-        // Todo: Task av
-        return new ArrayList<>();
+        ArrayList<String> trackList = new ArrayList<>();
+        for (Track track: tracks) {
+            trackList.add(track.getTrackId());
+        }
+        return trackList;
     }
+
 
     public List<String> listTrainIds() {
         // Todo: Task avi
@@ -81,7 +88,16 @@ public class TrainsController {
 
     public TrackInfoResponse getTrackInfo(String trackId) {
         // Todo: Task aix
-        return null;
+        Track findTrack = null;
+        for (Track track: tracks) {
+            if (track.getTrackId().equals(trackId)) {
+                findTrack = track;
+                break;
+            }
+        }
+
+        TrackInfoResponse t = new TrackInfoResponse(trackId, findTrack.getFromStationId(), findTrack.getToStationId(),  TrackType.NORMAL, 10);
+        return t;
     }
 
     public void simulate() {
