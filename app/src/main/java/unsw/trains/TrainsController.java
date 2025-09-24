@@ -12,9 +12,26 @@ import unsw.response.models.*;
  * The method signatures here are provided for you. Do NOT change the method signatures.
  */
 public class TrainsController {
-    // Add any fields here if necessary
+
+    private List <Station> stations = new ArrayList<Station>();
+
     public void createStation(String stationId, String type, double x, double y) {
-        // Todo: Task ai
+        Station station = null;
+
+        if (type.equals("PassengerStation")) {
+            station = new PassengerStation(stationId, type, x, y);
+
+        } else if (type.equals("CargoStation")) {
+            station = new CargoStation(stationId, type, x, y);
+
+        } else if (type.equals("CentralStation")) {
+            station = new CentralStation(stationId, type, x, y);
+
+        } else if (type.equals("DepotStation")) {
+            station = new DepotStation(stationId, type, x, y);
+        }
+
+        stations.add(station);
     }
 
     public void createTrack(String trackId, String fromStationId, String toStationId) {
@@ -27,8 +44,11 @@ public class TrainsController {
     }
 
     public List<String> listStationIds() {
-        // Todo: Task aiv
-        return new ArrayList<>();
+        ArrayList<String> stationList = new ArrayList<>();
+        for (Station station: stations) {
+            stationList.add(station.getStationId());
+        }
+        return stationList;
     }
 
     public List<String> listTrackIds() {
@@ -47,8 +67,16 @@ public class TrainsController {
     }
 
     public StationInfoResponse getStationInfo(String stationId) {
-        // Todo: Task aviii
-        return null;
+        Station findStation = null;
+        for (Station station: stations) {
+            if (station.getStationId().equals(stationId)) {
+                findStation = station;
+                break;
+            }
+        }
+
+        StationInfoResponse s = new StationInfoResponse(stationId, findStation.getType(), findStation.getPos());
+        return s;
     }
 
     public TrackInfoResponse getTrackInfo(String trackId) {
