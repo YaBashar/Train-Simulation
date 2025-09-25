@@ -16,6 +16,7 @@ public class TrainsController {
 
     private List <Station> stations = new ArrayList<Station>();
     private List <Track> tracks = new ArrayList<Track>();
+    private List <Train> trains = new ArrayList<Train>();
 
     public void createStation(String stationId, String type, double x, double y) {
         Station station = null;
@@ -43,7 +44,21 @@ public class TrainsController {
 
     public void createTrain(String trainId, String type, String stationId, List<String> route)
             throws InvalidRouteException {
-        // Todo: Task aiii
+        
+        Station startStation = Station.getStationById(stationId, stations);
+        Train train = null;
+
+        if (type.equals("PassengerTrain")) {
+            train = new PassengerTrain(trainId, type, stationId, route, startStation.getPos());
+
+        } else if (type.equals("CargoTrain")) {
+            train = new CargoTrain(trainId, type, stationId, route, startStation.getPos());
+
+        } else if (type.equals("BulletTrain")) {
+            train = new BulletTrain(trainId, type, stationId, route, startStation.getPos());
+        }
+
+        trains.add(train);
     }
 
     public List<String> listStationIds() {
@@ -62,15 +77,25 @@ public class TrainsController {
         return trackList;
     }
 
-
     public List<String> listTrainIds() {
-        // Todo: Task avi
-        return new ArrayList<>();
+        ArrayList<String> trainList = new ArrayList<>();
+        for (Train train: trains) {
+            trainList.add(train.getTrainId());
+        }
+        return trainList;
     }
 
     public TrainInfoResponse getTrainInfo(String trainId) {
-        // Todo: Task avii
-        return null;
+        Train findTrain = null;
+        for (Train train: trains) {
+            if (train.getTrainId().equals(trainId)) {
+                findTrain = train;
+                break;
+            }
+        }
+
+        TrainInfoResponse t = new TrainInfoResponse(trainId, findTrain.getStart(), findTrain.getType(), findTrain.getPos());
+        return t;
     }
 
     public StationInfoResponse getStationInfo(String stationId) {
