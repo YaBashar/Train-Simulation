@@ -1,5 +1,5 @@
 package unsw.trains;
-
+import java.util.List;
 import unsw.utils.Position;
 
 // Every Station has a number of trains
@@ -10,11 +10,10 @@ public class Station {
     private String type;
     private Position pos;
 
-
     public Station(String stationId, String type, double x, double y) {
         this.stationId = stationId;
-            this.type = type;
-            this.pos = new Position(x, y);
+        this.type = type;
+        this.pos = new Position(x, y);
     }
 
     public String getStationId() {
@@ -41,4 +40,16 @@ public class Station {
         this.pos = pos;
     }
 
+
+    public static Station getStationById(String stationId, List<Station> stations) {
+        Station findStation = null;
+        for (Station station: stations) {
+            if (station.getStationId().equals(stationId)) {
+                findStation = station;
+                break;
+            }
+        }
+
+        return findStation;
+    }
 }

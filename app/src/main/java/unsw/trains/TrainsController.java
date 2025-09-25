@@ -74,28 +74,13 @@ public class TrainsController {
     }
 
     public StationInfoResponse getStationInfo(String stationId) {
-        Station findStation = null;
-        for (Station station: stations) {
-            if (station.getStationId().equals(stationId)) {
-                findStation = station;
-                break;
-            }
-        }
-
+        Station findStation = Station.getStationById(stationId, stations);
         StationInfoResponse s = new StationInfoResponse(stationId, findStation.getType(), findStation.getPos());
         return s;
     }
 
     public TrackInfoResponse getTrackInfo(String trackId) {
-        // Todo: Task aix
-        Track findTrack = null;
-        for (Track track: tracks) {
-            if (track.getTrackId().equals(trackId)) {
-                findTrack = track;
-                break;
-            }
-        }
-
+        Track findTrack = Track.getTrackById(trackId, tracks);
         TrackInfoResponse t = new TrackInfoResponse(trackId, findTrack.getFromStationId(), findTrack.getToStationId(),  TrackType.NORMAL, 10);
         return t;
     }

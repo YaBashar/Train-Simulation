@@ -1,5 +1,7 @@
 package unsw.trains;
 
+import java.util.List;
+
 public class Track {
     private String trackId;
     private String fromStationId;
@@ -33,5 +35,17 @@ public class Track {
 
     public void setToStationId(String toStationId) {
         this.toStationId = toStationId;
+    }
+
+    public static Track getTrackById(String TrackId, List<Track> Tracks) {
+        Track findTrack = null;
+        for (Track Track: Tracks) {
+            if (Track.getTrackId().equals(TrackId)) {
+                findTrack = Track;
+                break;
+            }
+        }
+
+        return findTrack;
     }
 }
