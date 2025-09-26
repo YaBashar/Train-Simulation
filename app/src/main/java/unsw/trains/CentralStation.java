@@ -7,7 +7,6 @@ import unsw.exceptions.UNSWException;
 
 public class CentralStation extends Station {
 
-    private List<Train> trainsAtStation;
     private final int maxTrains = 8;
  
     public CentralStation(String stationId, String type, double x, double y) {
@@ -23,7 +22,7 @@ public class CentralStation extends Station {
     }
 
     public void addTrainToStation(Train train) throws UNSWException {
-        if (trainsAtStation.size() == maxTrains) {
+        if (this.trainsAtStation.size() == maxTrains) {
             throw new UNSWException("Train Capacity Exceeded", "Station Error", 404);
         }
 

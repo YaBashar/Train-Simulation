@@ -6,7 +6,6 @@ import unsw.exceptions.UNSWException;
 // Cannot store passengers
 
 public class CargoStation  extends Station {
-    private List<Train> trainsAtStation;
     private final int maxTrains = 4;
 
     public CargoStation(String stationId, String type, double x, double y) {
@@ -22,7 +21,7 @@ public class CargoStation  extends Station {
     }
 
     public void addTrainToStation(Train train) throws UNSWException {
-        if (trainsAtStation.size() == maxTrains) {
+        if (this.trainsAtStation.size() == maxTrains) {
             throw new UNSWException("Train Capacity Exceeded", "Station Error", 404);
         }
 
