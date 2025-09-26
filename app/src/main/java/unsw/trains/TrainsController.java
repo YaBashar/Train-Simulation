@@ -98,9 +98,19 @@ public class TrainsController {
         return t;
     }
 
+    // Need to incorporate Trains here
     public StationInfoResponse getStationInfo(String stationId) {
         Station findStation = Station.getStationById(stationId, stations);
-        StationInfoResponse s = new StationInfoResponse(stationId, findStation.getType(), findStation.getPos());
+
+        List<TrainInfoResponse> trainInfos = new ArrayList<TrainInfoResponse>();
+        for (Train train: trains) {
+            if (train.getCurrentStation().equals(stationId)) {
+                TrainInfoResponse t = new TrainInfoResponse(train.getTrainId(), train.getStart(), train.getType(), train.getPos());
+                trainInfos.add(t);
+            }
+        }
+
+        StationInfoResponse s = new StationInfoResponse(stationId, findStation.getType(), findStation.getPos(), trainInfos);
         return s;
     }
 
