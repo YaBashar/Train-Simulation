@@ -9,6 +9,7 @@ public class Station {
     private String stationId;
     private String type;
     private Position pos;
+    protected List<Train> trainsAtStation;
 
     public Station(String stationId, String type, double x, double y) {
         this.stationId = stationId;
@@ -40,6 +41,13 @@ public class Station {
         this.pos = pos;
     }
 
+    public List<Train> getTrainsAtStation() {
+        return trainsAtStation;
+    }
+
+    public void setTrainsAtStation(List<Train> trainsAtStation, Train train) {
+        this.trainsAtStation = trainsAtStation;
+    }
 
     public static Station getStationById(String stationId, List<Station> stations) {
         Station findStation = null;
