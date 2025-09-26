@@ -1,10 +1,34 @@
 package unsw.trains;
+import java.util.List;
+import unsw.exceptions.UNSWException;
 
-//Can have a maximum of 8 trains stopped at it at any given time.
+
 // A stopping point for trains, but no passengers or cargo can be loaded or unloaded here.
 
 public class DepotStation extends Station {
+
+    private List<Train> trainsAtStation;
+    private final int maxTrains = 8;
+
     public DepotStation(String stationId, String type, double x, double y) {
         super(stationId, type, x, y);
     }
+
+    public List<Train> getTrainsAtStation() {
+        return trainsAtStation;
+    }
+
+    public void setTrainsAtStation(List<Train> trainsAtStation) {
+        this.trainsAtStation = trainsAtStation;
+    }
+
+    public void addTrainToStation(Train train) throws UNSWException {
+        if (trainsAtStation.size() == maxTrains) {
+            throw new UNSWException("Train Capacity Exceeded", "Station Error", 404);
+        }
+
+        this.trainsAtStation.add(train);
+    }
+
+   
 }
