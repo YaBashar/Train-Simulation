@@ -3,7 +3,7 @@ package unsw.trains;
 import java.util.ArrayList;
 import java.util.List;
 
-import unsw.exceptions.InvalidRouteException;
+import unsw.exceptions.UNSWException;
 import unsw.response.models.*;
 import unsw.utils.TrackType;
 
@@ -43,7 +43,7 @@ public class TrainsController {
     }
 
     public void createTrain(String trainId, String type, String stationId, List<String> route)
-            throws InvalidRouteException {
+            throws UNSWException {
         
         Station startStation = Station.getStationById(stationId, stations);
         Train train = null;
@@ -59,6 +59,7 @@ public class TrainsController {
         }
 
         trains.add(train);
+        startStation.addTrainToStation(train);
     }
 
     public List<String> listStationIds() {
@@ -102,6 +103,7 @@ public class TrainsController {
     public StationInfoResponse getStationInfo(String stationId) {
         Station findStation = Station.getStationById(stationId, stations);
 
+        // Check this 
         List<TrainInfoResponse> trainInfos = new ArrayList<TrainInfoResponse>();
         for (Train train: trains) {
             if (train.getCurrentStation().equals(stationId)) {
