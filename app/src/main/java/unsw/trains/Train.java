@@ -8,6 +8,7 @@ public class Train {
     private String trainId;
     private String type;
     private String start;
+    private String currentStation; // Will need to update this when in between stations and at new stations
     private Position pos;
 
     private List<String> route;
@@ -16,6 +17,7 @@ public class Train {
         this.trainId = trainId;
         this.type = type;
         this.start = stationId;
+        this.currentStation = stationId;
         this.route = route;
         this.pos = pos;
     }
@@ -58,5 +60,13 @@ public class Train {
 
     public void setPos(Position pos) {
         this.pos = pos;
+    }
+
+    public String getCurrentStation() {
+        return currentStation;
+    }
+
+    public void setCurrentStation(String currentStation) {
+        this.currentStation = currentStation;
     }
 }
