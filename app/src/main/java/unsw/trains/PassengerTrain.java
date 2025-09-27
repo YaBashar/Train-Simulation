@@ -9,19 +9,9 @@ import unsw.utils.Position;
 
 public class PassengerTrain extends Train {
 
-    private Number speed;
-
     public PassengerTrain(String trainId, String type, String stationId, List<String> route, Position pos) {
         super(trainId, type, stationId, route, pos);
-        this.speed = 2;
+        super.setSpeed(2);
     }
-
-    public Number getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(Number speed) {
-        this.speed = speed;
-    }
-
+    
 }

@@ -1,6 +1,7 @@
 package unsw.trains;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import unsw.exceptions.UNSWException;
@@ -95,7 +96,7 @@ public class TrainsController {
             }
         }
 
-        TrainInfoResponse t = new TrainInfoResponse(trainId, findTrain.getStart(), findTrain.getType(), findTrain.getPos());
+        TrainInfoResponse t = new TrainInfoResponse(trainId, findTrain.getCurrentStation(), findTrain.getType(), findTrain.getCurrentPosition());
         return t;
     }
 
@@ -107,7 +108,7 @@ public class TrainsController {
         List<TrainInfoResponse> trainInfos = new ArrayList<TrainInfoResponse>();
         for (Train train: trains) {
             if (train.getCurrentStation().equals(stationId)) {
-                TrainInfoResponse t = new TrainInfoResponse(train.getTrainId(), train.getStart(), train.getType(), train.getPos());
+                TrainInfoResponse t = new TrainInfoResponse(train.getTrainId(), train.getStart(), train.getType(), train.getCurrentPosition());
                 trainInfos.add(t);
             }
         }
@@ -123,7 +124,11 @@ public class TrainsController {
     }
 
     public void simulate() {
-        // Todo: Task bi
+        // Move train based on ids in lexigraphcial order
+        
+        for (Train train: trains) {
+           train.moveForward(stations);
+        }
     }
 
     /**
