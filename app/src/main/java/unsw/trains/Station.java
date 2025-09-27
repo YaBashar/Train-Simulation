@@ -1,21 +1,26 @@
 package unsw.trains;
+import java.util.ArrayList;
 import java.util.List;
+
+import unsw.exceptions.UNSWException;
 import unsw.utils.Position;
 
 // Every Station has a number of trains
 // Every Station has either cargo, passengers or both
 
-public class Station {
+public abstract class Station {
     private String stationId;
     private String type;
     private Position pos;
-    protected List<Train> trainsAtStation;
+    protected List<Train> trainsAtStation = new ArrayList<Train>();
 
     public Station(String stationId, String type, double x, double y) {
         this.stationId = stationId;
         this.type = type;
         this.pos = new Position(x, y);
     }
+
+    public abstract void addTrainToStation(Train train) throws UNSWException;
 
     public String getStationId() {
         return stationId;

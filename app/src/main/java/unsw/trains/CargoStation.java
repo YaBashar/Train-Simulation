@@ -20,8 +20,9 @@ public class CargoStation  extends Station {
         this.trainsAtStation = trainsAtStation;
     }
 
+    @Override
     public void addTrainToStation(Train train) throws UNSWException {
-        if (this.trainsAtStation.size() == maxTrains) {
+        if (this.trainsAtStation.size() >= maxTrains) {
             throw new UNSWException("Train Capacity Exceeded", "Station Error", 404);
         }
 
