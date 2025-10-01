@@ -12,7 +12,7 @@ public abstract class Station {
     private String stationId;
     private String type;
     private Position pos;
-    protected List<Train> trainsAtStation = new ArrayList<Train>();
+    private List<Train> trainsAtStation = new ArrayList<Train>();
 
     public Station(String stationId, String type, double x, double y) {
         this.stationId = stationId;
@@ -51,7 +51,7 @@ public abstract class Station {
     }
 
     public void setTrainsAtStation(List<Train> trainsAtStation, Train train) {
-        this.trainsAtStation = trainsAtStation;
+        this.trainsAtStation.add(train);
     }
 
     public static Station getStationById(String stationId, List<Station> stations) {

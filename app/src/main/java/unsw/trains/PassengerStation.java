@@ -1,4 +1,6 @@
 package unsw.trains;
+import java.util.List;
+
 import unsw.exceptions.UNSWException;
 
 // Can store unlimited passengers
@@ -14,12 +16,11 @@ public class PassengerStation extends Station {
 
     @Override
     public void addTrainToStation(Train train) throws UNSWException {
-        if (this.trainsAtStation.size() >= maxTrains) {
+        List<Train> trainsAtStation = super.getTrainsAtStation();
+        if (trainsAtStation.size() >= maxTrains) {
             throw new UNSWException("Train Capacity Exceeded", "Station Error", 404);
         }
 
-        this.trainsAtStation.add(train);
+        super.setTrainsAtStation(trainsAtStation, train);
     }
-
-
 }

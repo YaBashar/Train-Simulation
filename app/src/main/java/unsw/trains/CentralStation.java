@@ -13,20 +13,13 @@ public class CentralStation extends Station {
         super(stationId, type, x, y);
     }
 
-    public List<Train> getTrainsAtStation() {
-        return trainsAtStation;
-    }
-
-    public void setTrainsAtStation(List<Train> trainsAtStation) {
-        this.trainsAtStation = trainsAtStation;
-    }
-
     @Override
     public void addTrainToStation(Train train) throws UNSWException {
-        if (this.trainsAtStation.size() >= maxTrains) {
+        List<Train> trainsAtStation = super.getTrainsAtStation();
+        if (trainsAtStation.size() >= maxTrains) {
             throw new UNSWException("Train Capacity Exceeded", "Station Error", 404);
         }
 
-        this.trainsAtStation.add(train);
+        super.setTrainsAtStation(trainsAtStation, train);
     }
 }
