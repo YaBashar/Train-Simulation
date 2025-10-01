@@ -1,6 +1,7 @@
 package unsw.trains;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -50,13 +51,13 @@ public class TrainsController {
         Train train = null;
 
         if (type.equals("PassengerTrain")) {
-            train = new PassengerTrain(trainId, type, stationId, route, startStation.getPos());
+            train = new PassengerTrain(trainId, type, stationId, startStation.getPos(), route, tracks);
 
         } else if (type.equals("CargoTrain")) {
-            train = new CargoTrain(trainId, type, stationId, route, startStation.getPos());
+            train = new CargoTrain(trainId, type, stationId, startStation.getPos(), route, tracks);
 
         } else if (type.equals("BulletTrain")) {
-            train = new BulletTrain(trainId, type, stationId, route, startStation.getPos());
+            train = new BulletTrain(trainId, type, stationId, startStation.getPos(), route, tracks);
         }
 
         trains.add(train);
@@ -125,9 +126,9 @@ public class TrainsController {
 
     public void simulate() {
         // Move train based on ids in lexigraphcial order
-        
+        trains.sort(Comparator.comparing(Train:: getTrainId));
         for (Train train: trains) {
-           train.moveForward(stations);
+           train.move(stations);
         }
     }
 

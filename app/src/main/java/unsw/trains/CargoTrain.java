@@ -7,8 +7,8 @@ import unsw.utils.Position;
 
 public class CargoTrain extends Train {
     
-    public CargoTrain(String trainId, String type, String stationId, List<String> route, Position pos) {
-        super(trainId, type, stationId, route, pos);
+    public CargoTrain(String trainId, String type, String stationId, Position pos, List<String> route, List<Track> tracks) {
+        super(trainId, type, stationId, pos, route, tracks);
         super.setSpeed(3);
     }
 

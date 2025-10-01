@@ -1,7 +1,6 @@
 package unsw.trains;
 import java.util.List;
 
-import unsw.exceptions.UNSWException;
 import unsw.utils.Position;
 
  // Need to store current position of route
@@ -13,23 +12,62 @@ public class Train {
     private String currentStation; // Will need to update this when in between stations and at new stations
     private Position currentPosition;
     private int speed;
-    private int routeIndex = 0;
-    private List<String> route;
+    private int routeIndex;
+    private List<String> stationsInRoute;
+    private boolean moveBackward;
+
+    private Route route;
     
-    public Train(String trainId, String type, String stationId, List<String> route, Position pos) {
+    public Train(String trainId, String type, String stationId, Position pos, List<String> stationsInRoute, List<Track> tracks) {
         this.trainId = trainId;
         this.type = type;
         this.start = stationId;
         this.currentStation = stationId;
-        this.route = route;
+        this.stationsInRoute = stationsInRoute;
         this.currentPosition = pos;
+        this.moveBackward = false;
+
+        this.route = new Route(stationsInRoute, tracks);
+        this.setRouteIndex(0);
     }
 
-    public void moveForward(List<Station> stations) {
-        Station nextStation = Station.getStationById(route.get(this.routeIndex + 1), stations);
-        Position nextStationPosition = nextStation.getPos();
-        Position destination = this.currentPosition.calculateNewPosition(nextStationPosition, this.speed);
+
+    public void move(List<Station> stations) {
+
+        String nextStationId = null;
+        Station nextStation;
+        Position nextStationPosition;
+        Position destination;
         
+        // Determine where the next station is based on train's relative position within the route
+        // If train is at end of route then we need to determine next station based on type of route
+        // If route is cyclical train moves back to start of route
+        // If route is linear train moves backwards.
+        if (this.getRouteIndex() < this.stationsInRoute.size() - 1 && this.moveBackward == false) {
+            nextStationId = this.stationsInRoute.get(this.getRouteIndex() + 1); 
+
+        } else {
+            if (this.route.isCyclical(route, start, currentStation)) {
+                this.setRouteIndex(0);
+                nextStationId = this.stationsInRoute.get(this.getRouteIndex()); 
+
+            } else {
+                this.setMoveBackward(true);
+            }
+        }
+
+        if(this.getRouteIndex() >= 0 && this.moveBackward == true) {
+            nextStationId = this.stationsInRoute.get(this.getRouteIndex() - 1); 
+
+        } else {
+            this.setMoveBackward(false);
+        }
+
+        nextStation = Station.getStationById(nextStationId, stations);
+        nextStationPosition = nextStation.getPos();
+        destination = this.currentPosition.calculateNewPosition(nextStationPosition, this.speed);
+        
+        // Determine whether train ends up at next station or in between stations
         if (destination.isInBound(nextStationPosition, speed)) {
             // Check if next Station can hold an inbound train others train stays in current position.
             try {
@@ -39,13 +77,17 @@ public class Train {
             }
 
             this.setCurrentPosition(nextStationPosition);
-            this.currentStation = nextStation.getStationId();
-            this.routeIndex += 1;
+            this.setCurrentStation(nextStation.getStationId());
+            this.setRouteIndex(this.getRouteIndex() + 1);;
 
         } else {
+            // train is in between stations
             this.setCurrentPosition(destination);
-        } 
+            this.setCurrentStation("-"); 
+        }
+       
     }
+
 
     // Getters and Setters
     public String getTrainId() {
@@ -73,13 +115,6 @@ public class Train {
         this.type = type;
     }
 
-    public List<String> getRoute() {
-        return route;
-    }
-
-    public void setRoute(List<String> route) {
-        this.route = route;
-    }
 
     public String getStart() {
         return start;
@@ -111,5 +146,13 @@ public class Train {
 
     public void setRouteIndex(int routeIndex) {
         this.routeIndex = routeIndex;
+    }
+
+    public boolean isMoveBackward() {
+        return moveBackward;
+    }
+
+    public void setMoveBackward(boolean moveBackward) {
+        this.moveBackward = moveBackward;
     }
 }

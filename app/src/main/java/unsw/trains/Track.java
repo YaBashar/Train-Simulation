@@ -48,4 +48,16 @@ public class Track {
 
         return findTrack;
     }
+
+    public static Track getTrackfromStationId(String StationId, List<Track> Tracks) {
+        Track findTrack = null;
+        for (Track Track: Tracks) {
+            if (Track.getFromStationId().equals(StationId)) {
+                findTrack = Track;
+                break;
+            }
+        }
+
+        return findTrack;
+    }
 }
