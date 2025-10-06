@@ -1,7 +1,6 @@
 package unsw.trains;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -105,13 +104,11 @@ public class TrainsController {
     public StationInfoResponse getStationInfo(String stationId) {
         Station findStation = Station.getStationById(stationId, stations);
 
-        // Check this 
         List<TrainInfoResponse> trainInfos = new ArrayList<TrainInfoResponse>();
+        List<Train> trains = findStation.getTrainsAtStation();
         for (Train train: trains) {
-            if (train.getCurrentStation().equals(stationId)) {
-                TrainInfoResponse t = new TrainInfoResponse(train.getTrainId(), train.getStart(), train.getType(), train.getCurrentPosition());
-                trainInfos.add(t);
-            }
+            TrainInfoResponse trainInfo = new TrainInfoResponse(train.getTrainId(), train.getCurrentStation(), train.getType(), train.getCurrentPosition());
+            trainInfos.add(trainInfo);
         }
 
         StationInfoResponse s = new StationInfoResponse(stationId, findStation.getType(), findStation.getPos(), trainInfos);
