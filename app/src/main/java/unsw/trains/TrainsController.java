@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import unsw.exceptions.InvalidRouteException;
 import unsw.exceptions.UNSWException;
 import unsw.response.models.*;
 import unsw.utils.TrackType;
@@ -44,7 +45,7 @@ public class TrainsController {
     }
 
     public void createTrain(String trainId, String type, String stationId, List<String> route)
-            throws UNSWException {
+            throws InvalidRouteException {
         
         Station startStation = Station.getStationById(stationId, stations);
         Train train = null;
@@ -60,7 +61,11 @@ public class TrainsController {
         }
 
         trains.add(train);
-        startStation.addTrainToStation(train);
+        try {
+            startStation.addTrainToStation(train);
+        } catch (UNSWException e) {
+            e.printStackTrace();
+        }
     }
 
     public List<String> listStationIds() {
@@ -145,6 +150,7 @@ public class TrainsController {
 
     public void createCargo(String startStationId, String destStationId, String cargoId, int weight) {
         // Todo: Task bii
+        Cargo cargo = new Cargo(cargoId, stations, startStationId, destStationId, weight);
     }
 
     public void createPerishableCargo(String startStationId, String destStationId, String cargoId, int weight,
