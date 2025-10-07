@@ -23,12 +23,8 @@ public abstract class Station {
     public abstract void addTrainToStation(Train train) throws UNSWException;
 
     public void removeTrainFromStation(String trainId) {
-        for (Train train: this.trainsAtStation) {
-            if (train.getTrainId().equals(trainId)) {
-                this.trainsAtStation.remove(train);
-                break;
-            }
-        }
+        Train findTrain = Train.getTrainById(trainId, trainsAtStation);
+        this.trainsAtStation.remove(findTrain);
     }
 
     public String getStationId() {
