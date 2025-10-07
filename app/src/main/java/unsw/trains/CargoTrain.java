@@ -1,13 +1,21 @@
 package unsw.trains;
 import java.util.List;
+
+import unsw.exceptions.InvalidRouteException;
 import unsw.utils.Position;
 
 
 public class CargoTrain extends Train {
     
-    public CargoTrain(String trainId, String type, String stationId, Position pos, List<String> route, List<Track> tracks) {
+    public CargoTrain(String trainId, String type, String stationId, Position pos, List<String> route, List<Track> tracks) throws InvalidRouteException {
         super(trainId, type, stationId, pos, route, tracks);
         super.setSpeed(3);
+
+        Route trainRoute = super.getRoute();
+        boolean isCycle = trainRoute.isCyclical();
+        if (isCycle) {
+            throw new InvalidRouteException("Invalid");
+        }
     }
 
      @Override
@@ -16,12 +24,6 @@ public class CargoTrain extends Train {
         Route route = this.getRoute();
         List<String> stationIds = route.getStations();
         
-        // boolean isCycle = route.isCyclical();
-        // if (isCycle) {
-        //     throw new InvalidRouteException("Invalid");
-        // }
-
-
         String nextStationId = getNextStation(route, stationIds);
         super.setNewPosition(nextStationId, stations);
     }
