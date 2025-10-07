@@ -1,8 +1,9 @@
 package unsw.trains;
 import java.util.List;
+
+import unsw.exceptions.InvalidRouteException;
 import unsw.utils.Position;
 
- // Need to store current position of route
 
 public abstract class Train {
     private String trainId;
@@ -31,7 +32,7 @@ public abstract class Train {
     public void move(List<Station> stations) {
     }
 
-    // need to remove train from previous station
+    
     public void setNewPosition(String nextStationId, List<Station> stations) {
 
         Station currentStation = Station.getStationById(this.currentStation, stations);
@@ -62,6 +63,20 @@ public abstract class Train {
     }
 
 
+    public static Train getTrainById(String trainId, List<Train> trains) {
+        
+        Train findTrain = null;
+        for (Train train: trains) {
+            if (train.getTrainId().equals(trainId)) {
+                trains.remove(train);
+                findTrain = train;
+                break;
+            }
+        }
+
+        return findTrain;
+    }
+    
     // Getters and Setters
     public String getTrainId() {
         return trainId;
