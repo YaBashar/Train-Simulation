@@ -1,7 +1,6 @@
 package unsw.trains;
 import java.util.List;
 
-import unsw.exceptions.InvalidRouteException;
 import unsw.utils.Position;
 
 

@@ -41,8 +41,8 @@ public class Route {
             return false;
         }
         
+        // Wrapped in NullPointer try catch as track can equal null if not cyclical
         try {
-
             String lastStationId = stations.get(stations.size() - 1);
             String firstStationId = stations.get(0);
 
@@ -66,5 +66,53 @@ public class Route {
         }
 
         return true;
+    }
+
+    public String getNextStationLinearRoute(Train train, Route route, List<String> stationIds) {
+        if (train.isMoveBackward() == true) {
+            if (route.getRouteIndex() > 0) {
+                 route.setRouteIndex(route.getRouteIndex() - 1);
+
+            }  else if (route.getRouteIndex() == 0) {
+                train.setMoveBackward(false);
+                route.setRouteIndex(route.getRouteIndex() + 1);
+            }
+
+        } else {
+
+            if (route.getRouteIndex() < stationIds.size() - 1) {
+                route.setRouteIndex(route.getRouteIndex() + 1);
+            } else {
+                train.setMoveBackward(true);
+                route.setRouteIndex(route.getRouteIndex() - 1);
+            }
+        }
+
+        String nextStationId = stationIds.get(route.getRouteIndex());
+        return nextStationId;
+    }
+
+    public String getNextStationLinearAndCyclicalRoute(Train train, Route route, List<String> stationIds) {
+        if (route.getRouteIndex() < stationIds.size() - 1 && train.isMoveBackward() == false) {
+            route.setRouteIndex((route.getRouteIndex() + 1)); 
+
+        } else {
+
+            if (route.isCyclical()) {
+                route.setRouteIndex(0);
+
+            } else {
+                train.setMoveBackward(true);
+            }
+        }
+
+        if(route.getRouteIndex() >= 0 && train.isMoveBackward() == true) {
+            route.setRouteIndex((route.getRouteIndex() - 1));  
+
+        } else {
+            train.setMoveBackward(false);
+        }
+
+        return stationIds.get(route.getRouteIndex());
     }
 }
