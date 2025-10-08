@@ -21,4 +21,14 @@ public class CargoStation  extends Station {
 
         super.setTrainsAtStation(trainsAtStation, train);
     }
+
+     @Override
+    public void addLoadToStation(Load load) throws UNSWException {
+        List<Load> loadsAtStation = super.getLoadsAtStation();
+        if (load.getType().equals("Passenger")) {
+            throw new UNSWException("This station cannot hold passengers", "Station Error", 404);
+        }
+
+        super.setLoadsAtStation(loadsAtStation, load);
+    }
 }

@@ -22,4 +22,10 @@ public class CentralStation extends Station {
 
         super.setTrainsAtStation(trainsAtStation, train);
     }
+
+    @Override
+    public void addLoadToStation(Load load) {
+        List<Load> loadsAtStation = super.getLoadsAtStation();
+        super.setLoadsAtStation(loadsAtStation, load);
+    }
 }

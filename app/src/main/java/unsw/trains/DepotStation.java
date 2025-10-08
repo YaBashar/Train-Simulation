@@ -23,4 +23,8 @@ public class DepotStation extends Station {
         super.setTrainsAtStation(trainsAtStation, train);
     }
    
+    @Override
+    public void addLoadToStation(Load load) throws UNSWException {
+        // leave empty or maybe throw exception.
+    }
 }
