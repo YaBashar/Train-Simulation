@@ -105,18 +105,24 @@ public class TrainsController {
         return t;
     }
 
-    // Need to incorporate Trains here
     public StationInfoResponse getStationInfo(String stationId) {
         Station findStation = Station.getStationById(stationId, stations);
 
         List<TrainInfoResponse> trainInfos = new ArrayList<TrainInfoResponse>();
         List<Train> trains = findStation.getTrainsAtStation();
         for (Train train: trains) {
-            TrainInfoResponse trainInfo = new TrainInfoResponse(train.getTrainId(), train.getCurrentStation(), train.getType(), train.getCurrentPosition());
+            TrainInfoResponse trainInfo = this.getTrainInfo(train.getTrainId());
             trainInfos.add(trainInfo);
         }
 
-        StationInfoResponse s = new StationInfoResponse(stationId, findStation.getType(), findStation.getPos(), trainInfos);
+        List<LoadInfoResponse> loadInfos = new ArrayList<LoadInfoResponse>();
+        List<Load> loads = findStation.getLoadsAtStation();
+        for (Load load: loads) {
+            LoadInfoResponse loadInfo = new LoadInfoResponse(load.getloadId(), load.getType());
+            loadInfos.add(loadInfo);
+        }
+
+        StationInfoResponse s = new StationInfoResponse(stationId, findStation.getType(), findStation.getPos(), loadInfos, trainInfos);
         return s;
     }
 
@@ -145,12 +151,27 @@ public class TrainsController {
     }
 
     public void createPassenger(String startStationId, String destStationId, String passengerId) {
-        // Todo: Task bii
+        // Todo: Task cii
+        Station startStation = Station.getStationById(startStationId, stations);
+        Load passenger = new Passenger(passengerId, startStation, destStationId);
+        // startStation.add(passenger);
+
+        try {
+            startStation.addLoadToStation(passenger);
+        } catch (UNSWException e) {
+            e.printStackTrace();
+        }
     }
 
     public void createCargo(String startStationId, String destStationId, String cargoId, int weight) {
         // Todo: Task bii
-        Cargo cargo = new Cargo(cargoId, stations, startStationId, destStationId, weight);
+        Station startStation = Station.getStationById(startStationId, stations);
+        Load cargo = new Cargo(cargoId, startStation, destStationId, weight);
+        try {
+            startStation.addLoadToStation(cargo);
+        } catch (UNSWException e) {
+            e.printStackTrace();
+        }
     }
 
     public void createPerishableCargo(String startStationId, String destStationId, String cargoId, int weight,
@@ -163,6 +184,6 @@ public class TrainsController {
     }
 
     public void createPassenger(String startStationId, String destStationId, String passengerId, boolean isMechanic) {
-        // Todo: Task cii
+        
     }
 }
