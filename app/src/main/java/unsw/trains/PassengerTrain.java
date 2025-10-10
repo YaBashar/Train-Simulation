@@ -1,4 +1,5 @@
 package unsw.trains;
+import java.util.ArrayList;
 import java.util.List;
 
 import unsw.exceptions.InvalidRouteException;
@@ -11,6 +12,17 @@ import unsw.utils.Position;
 
 public class PassengerTrain extends Train {
 
+    private final int maxWeightOnBoard = 3500;
+    private int currentWeightOnBoard;
+
+    public int getCurrentWeightOnBoard() {
+        return currentWeightOnBoard;
+    }
+
+    public void setCurrentWeightOnBoard(int currentWeightOnBoard) {
+        this.currentWeightOnBoard = currentWeightOnBoard;
+    }
+
     public PassengerTrain(String trainId, String type, String stationId, Position pos, List<String> route, List<Track> tracks) throws InvalidRouteException{
         super(trainId, type, stationId, pos, route, tracks);
         super.setSpeed(2);
@@ -20,6 +32,8 @@ public class PassengerTrain extends Train {
         if (isCycle) {
             throw new InvalidRouteException("Invalid");
         }
+
+        this.currentWeightOnBoard = 0;
     }
 
     @Override
@@ -33,7 +47,21 @@ public class PassengerTrain extends Train {
 
     }
 
-    
+    @Override 
+    public void embarkLoads(List<Load> loadsOnStation) {
+
+        List<Load> embarkingLoads = new ArrayList<Load>();
+
+        for (Load load: loadsOnStation) {
+            if (load.getType().equals("Passenger") && this.currentWeightOnBoard < this.maxWeightOnBoard) {
+                super.setLoadsOnTrain(load);
+                embarkingLoads.add(load);
+                this.currentWeightOnBoard += load.getWeight();
+            }
+        }
+
+        loadsOnStation.removeAll(embarkingLoads);
+    }
     
     
 }

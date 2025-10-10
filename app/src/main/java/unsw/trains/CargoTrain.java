@@ -1,11 +1,28 @@
 package unsw.trains;
+import java.util.ArrayList;
 import java.util.List;
 
 import unsw.exceptions.InvalidRouteException;
 import unsw.utils.Position;
 
+/*
+ * Can only carry cargo.
+ * Holds a maximum of 5000kg of cargo.
+ * Speed is slowed depending on how much cargo onboard 
+ */
 
 public class CargoTrain extends Train {
+
+    private final int maxWeightOnBoard = 5000;
+    private int currentWeightOnBoard;
+
+    public int getCurrentWeightOnBoard() {
+        return currentWeightOnBoard;
+    }
+
+    public void setCurrentWeightOnBoard(int currentWeightOnBoard) {
+        this.currentWeightOnBoard = currentWeightOnBoard;
+    }
     
     public CargoTrain(String trainId, String type, String stationId, Position pos, List<String> route, List<Track> tracks) throws InvalidRouteException {
         super(trainId, type, stationId, pos, route, tracks);
@@ -28,4 +45,20 @@ public class CargoTrain extends Train {
         super.setNewPosition(nextStationId, stations);
     }
 
+
+    @Override 
+    public void embarkLoads(List<Load> loadsOnStation) {
+
+        List<Load> boardedLoads = new ArrayList<>();
+
+        for (Load load: loadsOnStation) {
+            if (load.getType().equals("Cargo") && this.currentWeightOnBoard < this.maxWeightOnBoard) {
+                super.setLoadsOnTrain(load);
+                boardedLoads.add(load);
+                this.currentWeightOnBoard += load.getWeight();
+            }
+        }
+
+        loadsOnStation.removeAll(boardedLoads);
+    }
 }
