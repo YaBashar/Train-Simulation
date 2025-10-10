@@ -1,4 +1,5 @@
 package unsw.trains;
+import java.util.ArrayList;
 import java.util.List;
 
 import unsw.utils.Position;
@@ -15,7 +16,10 @@ public abstract class Train {
     private boolean moveBackward;
 
     private Route route;
+    private List<Load> loadsOnTrain;
     
+   
+
     public Train(String trainId, String type, String stationId, Position pos, List<String> stationsInRoute, List<Track> tracks) {
         this.trainId = trainId;
         this.type = type;
@@ -26,23 +30,26 @@ public abstract class Train {
         this.moveBackward = false;
 
         this.route = new Route(stationsInRoute, tracks);
+        this.loadsOnTrain = new ArrayList<Load>();
     }
 
-    public void move(List<Station> stations) {
-    }
+    public abstract void move(List<Station> stations);
+    public abstract void embarkLoads(List<Load> loadsOnStation);
 
-    
+
     public void setNewPosition(String nextStationId, List<Station> stations) {
 
-        Station currentStation = Station.getStationById(this.currentStation, stations);
+        Station currentStation = Station.getStationById(this.currentStation, stations);   
+        List<Load> loadsOnStation = currentStation.getLoadsAtStation();
+        embarkLoads(loadsOnStation);
+
         Station nextStation = Station.getStationById(nextStationId, stations);
-        
         Position nextStationPosition = nextStation.getPos();
         Position destination = this.getCurrentPosition().calculateNewPosition(nextStationPosition, this.getSpeed());
 
-        // Determine whether train ends up at next station or in between stations
-        if (destination.isInBound(nextStationPosition, this.getSpeed())) {
-            // Check if next Station can hold an inbound train others train stays in current position.
+
+        if (this.currentPosition.isInBound(nextStationPosition, this.getSpeed())) {
+
             try {
                 currentStation.removeTrainFromStation(this.getTrainId());
                 nextStation.addTrainToStation(this);
@@ -50,15 +57,30 @@ public abstract class Train {
                 return;
             }
 
+            route.updateRouteIndexOnArrival(this, route, route.getStations());
+            disembark(loadsOnTrain, nextStation.getLoadsAtStation(), nextStationId);
+
             this.setCurrentPosition(nextStationPosition);
             this.setCurrentStation(nextStation.getStationId());
-            route.setRouteIndex(route.getRouteIndex());;
-
+            
         } else {
-            // train is in between stations
             this.setCurrentPosition(destination);
-            this.setCurrentStation("-"); 
         }
+    }
+
+
+    public void disembark(List<Load> loadsOnTrain, List<Load> loadsOnStation, String stationId) {
+        
+        List<Load> disembarkingLoads = new ArrayList<Load>();
+        
+        for (Load load: loadsOnTrain) {
+            if (load.getDestination().equals(stationId)) {
+                loadsOnStation.add(load);
+                disembarkingLoads.add(load);
+            }
+        }
+
+        loadsOnTrain.removeAll(disembarkingLoads);    
     }
 
 
@@ -141,6 +163,11 @@ public abstract class Train {
         return route;
     }
 
-   
+     public List<Load> getLoadsOnTrain() {
+        return loadsOnTrain;
+    }
 
+    public void setLoadsOnTrain(Load load) {
+        this.loadsOnTrain.add(load);
+    }
 }
