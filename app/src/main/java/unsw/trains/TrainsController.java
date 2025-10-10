@@ -93,6 +93,8 @@ public class TrainsController {
     }
 
     public TrainInfoResponse getTrainInfo(String trainId) {
+
+        
         Train findTrain = null;
         for (Train train: trains) {
             if (train.getTrainId().equals(trainId)) {
@@ -101,7 +103,14 @@ public class TrainsController {
             }
         }
 
-        TrainInfoResponse t = new TrainInfoResponse(trainId, findTrain.getCurrentStation(), findTrain.getType(), findTrain.getCurrentPosition());
+        List<LoadInfoResponse> loadInfos = new ArrayList<LoadInfoResponse>();
+        List<Load> loads = findTrain.getLoadsOnTrain();
+        for (Load load: loads) {
+            LoadInfoResponse loadInfo = new LoadInfoResponse(load.getloadId(), load.getType());
+            loadInfos.add(loadInfo);
+        }
+
+        TrainInfoResponse t = new TrainInfoResponse(trainId, findTrain.getCurrentStation(), findTrain.getType(), findTrain.getCurrentPosition(), loadInfos);
         return t;
     }
 
