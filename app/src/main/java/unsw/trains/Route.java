@@ -68,51 +68,77 @@ public class Route {
         return true;
     }
 
-    public String getNextStationLinearRoute(Train train, Route route, List<String> stationIds) {
+
+    public int calculateNextIndexLinearRoute(Train train, Route route, List<String> stationIds) {
+        int currentIndex = route.getRouteIndex();
+        int nextIndex = 0;
+        
         if (train.isMoveBackward() == true) {
-            if (route.getRouteIndex() > 0) {
-                 route.setRouteIndex(route.getRouteIndex() - 1);
+            if (currentIndex > 0) {
+                nextIndex = currentIndex - 1;
 
             }  else if (route.getRouteIndex() == 0) {
                 train.setMoveBackward(false);
-                route.setRouteIndex(route.getRouteIndex() + 1);
+                nextIndex = currentIndex + 1;
             }
 
         } else {
 
             if (route.getRouteIndex() < stationIds.size() - 1) {
-                route.setRouteIndex(route.getRouteIndex() + 1);
+                nextIndex = currentIndex + 1;
             } else {
                 train.setMoveBackward(true);
-                route.setRouteIndex(route.getRouteIndex() - 1);
+                nextIndex = currentIndex - 1;
             }
         }
 
-        String nextStationId = stationIds.get(route.getRouteIndex());
+        return nextIndex;
+    }
+
+    public String getNextStationLinearRoute(Train train, Route route, List<String> stationIds) {
+        int nextIndex = calculateNextIndexLinearRoute(train, route, stationIds);
+        String nextStationId = stationIds.get(nextIndex);
         return nextStationId;
     }
 
-    public String getNextStationLinearAndCyclicalRoute(Train train, Route route, List<String> stationIds) {
-        if (route.getRouteIndex() < stationIds.size() - 1 && train.isMoveBackward() == false) {
-            route.setRouteIndex((route.getRouteIndex() + 1)); 
+    public void updateRouteIndexOnArrival(Train train, Route route, List<String> stationIds) {
+        
+        int nextIndex = 0;
 
+        if (train instanceof PassengerTrain || train instanceof CargoTrain) {
+            nextIndex = calculateNextIndexLinearRoute(train, route, stationIds);
+
+        } else if (train instanceof BulletTrain) {
+            nextIndex = calculateNextIndexLinearAndCyclicalRoute(train, route, stationIds);
+        }
+
+        route.setRouteIndex(nextIndex);
+    }
+
+
+    public int calculateNextIndexLinearAndCyclicalRoute(Train train, Route route, List<String> stationIds) {
+        
+        int currentIndex = route.getRouteIndex();
+        int nextIndex = 0;
+        
+        if (route.isLinear()) {
+            nextIndex = calculateNextIndexLinearRoute(train, route, stationIds);
+        
         } else {
-
-            if (route.isCyclical()) {
-                route.setRouteIndex(0);
-
+            
+            if (currentIndex >= stationIds.size() - 1) {
+                nextIndex = 0;
             } else {
-                train.setMoveBackward(true);
+                nextIndex = currentIndex + 1;
             }
         }
 
-        if(route.getRouteIndex() >= 0 && train.isMoveBackward() == true) {
-            route.setRouteIndex((route.getRouteIndex() - 1));  
+        return nextIndex;
+    }
 
-        } else {
-            train.setMoveBackward(false);
-        }
-
-        return stationIds.get(route.getRouteIndex());
+    public String getNextStationLinearAndCyclicalRoute(Train train, Route route, List<String> stationIds) {
+        int nextIndex = calculateNextIndexLinearAndCyclicalRoute(train, route, stationIds);
+        String nextStationId = stationIds.get(nextIndex);
+        return nextStationId;
     }
 }
