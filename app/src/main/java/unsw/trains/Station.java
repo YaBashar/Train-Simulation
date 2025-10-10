@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import unsw.exceptions.UNSWException;
-import unsw.response.models.LoadInfoResponse;
 import unsw.utils.Position;
 
 // Every Station has a number of trains
@@ -29,7 +28,15 @@ public abstract class Station {
         Train findTrain = Train.getTrainById(trainId, trainsAtStation);
         this.trainsAtStation.remove(findTrain);
     }
+    
+    public void removeLoadFromStation(String loadId) {
+        Load findLoad = Load.getLoadById(loadId, loadsAtStation);
+        this.loadsAtStation.remove(findLoad);
+    }
 
+
+    // getters and setters
+    
     public String getStationId() {
         return stationId;
     }
