@@ -17,7 +17,6 @@ public abstract class Load {
         this.weight = weight;
         this.currentPosition = currentPosition;
         this.destination = destination;
-        this.type = type;
     }
 
     public static Load getLoadById(String loadId, List<Load> loads) {
