@@ -1,5 +1,6 @@
 package unsw.trains;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import unsw.exceptions.UNSWException;
@@ -24,15 +25,40 @@ public abstract class Station {
     public abstract void addLoadToStation(Load load) throws UNSWException;
     public abstract void addTrainToStation(Train train) throws UNSWException;
 
+    
+    public void embarkLoads() {
+        List<Load> embarkedLoads = new ArrayList<>();
+        trainsAtStation.sort(Comparator.comparing(Train:: getTrainId));
+        loadsAtStation.sort(Comparator.comparing(Load:: getloadId));
+
+        for (Train train: trainsAtStation) {
+            for (Load load: loadsAtStation) {
+                if (train.canAcceptLoad(load)) {
+                    train.getLoadsOnTrain().add(load);
+                    embarkedLoads.add(load);
+                }
+            }    
+        }
+        this.loadsAtStation.removeAll(embarkedLoads);
+    }
+    
+    public void disembark(List<Load> loadsOnTrain, String stationId) {
+        List<Load> disembarkingLoads = new ArrayList<Load>();
+        for (Load load: loadsOnTrain) {
+            if (load.getDestination().equals(stationId)) {
+                this.loadsAtStation.add(load);
+                disembarkingLoads.add(load);
+            }
+        }
+        loadsOnTrain.removeAll(disembarkingLoads);    
+    }
+
     public void removeTrainFromStation(String trainId) {
         Train findTrain = Train.getTrainById(trainId, trainsAtStation);
+        disembark(findTrain.getLoadsOnTrain(), trainId);
         this.trainsAtStation.remove(findTrain);
     }
     
-    public void removeLoadFromStation(String loadId) {
-        Load findLoad = Load.getLoadById(loadId, loadsAtStation);
-        this.loadsAtStation.remove(findLoad);
-    }
 
 
     // getters and setters

@@ -61,7 +61,7 @@ public class Route {
     public boolean isLinear() {
         List<String> stations = this.getStations();
 
-        if (stations.size() < 2 || this.isCyclical() == true) {
+        if (stations.size() < 3 || this.isCyclical() == true) {
             return false;
         }
 

@@ -23,27 +23,13 @@ public class BulletTrain extends Train {
        
     }
 
-    @Override 
-    public void embarkLoads(List<Load> loadsOnStation) {
-        
-        List<Load> boardedLoads = new ArrayList<>();
-        for (Load load: loadsOnStation) {
-            if (this.currentWeightOnBoard < this.maxWeightOnBoard) {
-                super.setLoadsOnTrain(load);
-                boardedLoads.add(load);
-                this.currentWeightOnBoard += load.getWeight();
-            }
+    @Override
+    public boolean canAcceptLoad(Load load) {
+        if ((load.getType().equals("Passenger") || load.getType().equals("Cargo")) && this.currentWeightOnBoard <= maxWeightOnBoard) {
+            this.currentWeightOnBoard += load.getWeight();
+            return true;
         }
 
-        loadsOnStation.removeAll(boardedLoads);
+        return false;
     }
-
-    public int getCurrentWeightOnBoard() {
-        return currentWeightOnBoard;
-    }
-
-    public void setCurrentWeightOnBoard(int currentWeightOnBoard) {
-        this.currentWeightOnBoard = currentWeightOnBoard;
-    }
-    
 }

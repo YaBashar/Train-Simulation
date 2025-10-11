@@ -47,21 +47,14 @@ public class PassengerTrain extends Train {
 
     }
 
-    @Override 
-    public void embarkLoads(List<Load> loadsOnStation) {
+    @Override
+    public boolean canAcceptLoad(Load load) {
 
-        List<Load> embarkingLoads = new ArrayList<Load>();
-
-        for (Load load: loadsOnStation) {
-            if (load.getType().equals("Passenger") && this.currentWeightOnBoard < this.maxWeightOnBoard) {
-                super.setLoadsOnTrain(load);
-                embarkingLoads.add(load);
-                this.currentWeightOnBoard += load.getWeight();
-            }
+        if (load.getType().equals("Passenger") && this.currentWeightOnBoard <= maxWeightOnBoard) {
+            currentWeightOnBoard += load.getWeight();
+            return true;
         }
 
-        loadsOnStation.removeAll(embarkingLoads);
-    }
-    
-    
+        return false;
+    }   
 }

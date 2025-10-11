@@ -35,7 +35,7 @@ public class CargoTrain extends Train {
         }
     }
 
-     @Override
+    @Override
     public void move(List<Station> stations)  {
 
         Route route = this.getRoute();
@@ -45,20 +45,13 @@ public class CargoTrain extends Train {
         super.setNewPosition(nextStationId, stations);
     }
 
-
-    @Override 
-    public void embarkLoads(List<Load> loadsOnStation) {
-
-        List<Load> boardedLoads = new ArrayList<>();
-
-        for (Load load: loadsOnStation) {
-            if (load.getType().equals("Cargo") && this.currentWeightOnBoard < this.maxWeightOnBoard) {
-                super.setLoadsOnTrain(load);
-                boardedLoads.add(load);
-                this.currentWeightOnBoard += load.getWeight();
-            }
+    @Override
+    public boolean canAcceptLoad(Load load) {
+        if (load.getType().equals("Cargo") && this.currentWeightOnBoard <= maxWeightOnBoard) {
+            this.currentWeightOnBoard += load.getWeight();
+            return true;
         }
 
-        loadsOnStation.removeAll(boardedLoads);
+        return false;
     }
 }

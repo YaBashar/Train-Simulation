@@ -14,12 +14,9 @@ public abstract class Train {
     private int speed;
     private List<String> stationsInRoute;
     private boolean moveBackward;
-
     private Route route;
     private List<Load> loadsOnTrain;
     
-   
-
     public Train(String trainId, String type, String stationId, Position pos, List<String> stationsInRoute, List<Track> tracks) {
         this.trainId = trainId;
         this.type = type;
@@ -34,22 +31,17 @@ public abstract class Train {
     }
 
     public abstract void move(List<Station> stations);
-    public abstract void embarkLoads(List<Load> loadsOnStation);
-
+    public abstract boolean canAcceptLoad(Load load);
 
     public void setNewPosition(String nextStationId, List<Station> stations) {
-
         Station currentStation = Station.getStationById(this.currentStation, stations);   
-        List<Load> loadsOnStation = currentStation.getLoadsAtStation();
-        embarkLoads(loadsOnStation);
-
         Station nextStation = Station.getStationById(nextStationId, stations);
+        currentStation.embarkLoads();
+
         Position nextStationPosition = nextStation.getPos();
         Position destination = this.getCurrentPosition().calculateNewPosition(nextStationPosition, this.getSpeed());
 
-
         if (this.currentPosition.isInBound(nextStationPosition, this.getSpeed())) {
-
             try {
                 currentStation.removeTrainFromStation(this.getTrainId());
                 nextStation.addTrainToStation(this);
@@ -57,9 +49,8 @@ public abstract class Train {
                 return;
             }
 
+            nextStation.disembark(loadsOnTrain, nextStationId);
             route.updateRouteIndexOnArrival(this, route, route.getStations());
-            disembark(loadsOnTrain, nextStation.getLoadsAtStation(), nextStationId);
-
             this.setCurrentPosition(nextStationPosition);
             this.setCurrentStation(nextStation.getStationId());
             
@@ -68,24 +59,8 @@ public abstract class Train {
         }
     }
 
-
-    public void disembark(List<Load> loadsOnTrain, List<Load> loadsOnStation, String stationId) {
-        
-        List<Load> disembarkingLoads = new ArrayList<Load>();
-        
-        for (Load load: loadsOnTrain) {
-            if (load.getDestination().equals(stationId)) {
-                loadsOnStation.add(load);
-                disembarkingLoads.add(load);
-            }
-        }
-
-        loadsOnTrain.removeAll(disembarkingLoads);    
-    }
-
-
-    public static Train getTrainById(String trainId, List<Train> trains) {
-        
+    
+    public static Train getTrainById(String trainId, List<Train> trains) {   
         Train findTrain = null;
         for (Train train: trains) {
             if (train.getTrainId().equals(trainId)) {
@@ -94,7 +69,6 @@ public abstract class Train {
                 break;
             }
         }
-
         return findTrain;
     }
     
