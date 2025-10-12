@@ -36,7 +36,10 @@ public class BulletTrain extends Train {
         if (load.getType().equals("Cargo") && this.currentWeightOnBoard <= maxWeightOnBoard) {
             this.totalCargoWeightOnBoard += load.getWeight();
             this.currentWeightOnBoard += load.getWeight();
-            slowDownCargo(totalCargoWeightOnBoard);
+
+            Cargo cargo = (Cargo) load;
+            double newSpeed = cargo.slowDownTrain(totalCargoWeightOnBoard, this.getSpeed());
+            this.setSpeed(newSpeed);
 
             return true;
         }
@@ -44,9 +47,4 @@ public class BulletTrain extends Train {
         return false;
     }
 
-    public void slowDownCargo(int totalWeight) {
-        double slowDownFactor = (double)totalWeight * 0.01;
-        double newSpeed = (100 - slowDownFactor) * getSpeed() / 100;
-        setSpeed(newSpeed);
-    }
 }

@@ -46,18 +46,17 @@ public class CargoTrain extends Train {
 
     @Override
     public boolean canAcceptLoad(Load load) {
-        if (load.getType().equals("Cargo") && this.currentWeightOnBoard <= maxWeightOnBoard) {
+        if (load.getType().equals("Cargo") && this.currentWeightOnBoard <= maxWeightOnBoard) {            
             this.currentWeightOnBoard += load.getWeight();
-            slowDownCargo(currentWeightOnBoard);
+
+            Cargo cargo = (Cargo) load;
+            double newSpeed = cargo.slowDownTrain(currentWeightOnBoard, this.getSpeed());
+            setSpeed(newSpeed);
+
             return true;
         }
 
         return false;
     }
 
-    public void slowDownCargo(int totalWeight) {
-        double slowDownFactor = (double)totalWeight * 0.01;
-        double newSpeed = (100 - slowDownFactor) * getSpeed() / 100;
-        setSpeed(newSpeed);
-    }
 }
