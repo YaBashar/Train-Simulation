@@ -40,9 +40,7 @@ public class PassengerTrain extends Train {
     public void move(List<Station> stations) {
 
         Route route = this.getRoute();
-        List<String> stationIds = route.getStations();
-        
-        String nextStationId = route.getNextStationLinearRoute((Train) this, route, stationIds);
+        String nextStationId = route.getNextStationLinearRoute((Train) this);
         super.setNewPosition(nextStationId, stations);
 
     }

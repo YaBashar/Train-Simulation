@@ -317,4 +317,25 @@ public class MyTests {
 
         assertEquals(new Position(4.5, 0.0), controller.getTrainInfo("train1").getPosition());
     }
+
+
+    @Test
+    public void testPerishableCargo() {
+        TrainsController controller = new TrainsController();
+        controller.createStation("s1", "CargoStation", 0, 0);
+        controller.createStation("s2", "CargoStation", 3, 0);
+        controller.createStation("s3", "CargoStation", 6, 0);
+        controller.createTrack("t1-2", "s1", "s2");
+
+        controller.createPerishableCargo("s1", "s2", "c1", 1000, 10);
+        assertDoesNotThrow(() -> {
+            controller.createTrain("train1", "CargoTrain", "s1", List.of("s1", "s2", "s3"));
+        });
+
+        controller.simulate();
+        assertEquals(List.of(new LoadInfoResponse("c1", "PerishableCargo")), controller.getTrainInfo("train1").getLoads());
+        assertEquals(0, controller.getStationInfo("s1").getLoads().size());
+
+        assertEquals(new Position(2.7, 0.0), controller.getTrainInfo("train1").getPosition());
+    }
 }

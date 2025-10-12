@@ -69,22 +69,22 @@ public class Route {
     }
 
 
-    public int calculateNextIndexLinearRoute(Train train, Route route, List<String> stationIds) {
-        int currentIndex = route.getRouteIndex();
+    public int calculateNextIndexLinearRoute(Train train) {
+        int currentIndex = this.getRouteIndex();
         int nextIndex = 0;
         
         if (train.isMoveBackward() == true) {
             if (currentIndex > 0) {
                 nextIndex = currentIndex - 1;
 
-            }  else if (route.getRouteIndex() == 0) {
+            }  else if (this.getRouteIndex() == 0) {
                 train.setMoveBackward(false);
                 nextIndex = currentIndex + 1;
             }
 
         } else {
 
-            if (route.getRouteIndex() < stationIds.size() - 1) {
+            if (this.getRouteIndex() < this.stations.size() - 1) {
                 nextIndex = currentIndex + 1;
             } else {
                 train.setMoveBackward(true);
@@ -95,50 +95,43 @@ public class Route {
         return nextIndex;
     }
 
-    public String getNextStationLinearRoute(Train train, Route route, List<String> stationIds) {
-        int nextIndex = calculateNextIndexLinearRoute(train, route, stationIds);
-        String nextStationId = stationIds.get(nextIndex);
+    public String getNextStationLinearRoute(Train train) {
+        int nextIndex = calculateNextIndexLinearRoute(train);
+        String nextStationId = stations.get(nextIndex);
         return nextStationId;
     }
 
-    public void updateRouteIndexOnArrival(Train train, Route route, List<String> stationIds) {
-        
-        int nextIndex = 0;
 
-        if (train instanceof PassengerTrain || train instanceof CargoTrain) {
-            nextIndex = calculateNextIndexLinearRoute(train, route, stationIds);
-
-        } else if (train instanceof BulletTrain) {
-            nextIndex = calculateNextIndexLinearAndCyclicalRoute(train, route, stationIds);
-        }
-
-        route.setRouteIndex(nextIndex);
-    }
-
-
-    public int calculateNextIndexLinearAndCyclicalRoute(Train train, Route route, List<String> stationIds) {
-        
-        int currentIndex = route.getRouteIndex();
+    public int calculateNextIndexLinearAndCyclicalRoute(Train train) {
+        int currentIndex = this.getRouteIndex();
         int nextIndex = 0;
         
-        if (route.isLinear()) {
-            nextIndex = calculateNextIndexLinearRoute(train, route, stationIds);
-        
+        if (this.isLinear()) {
+            nextIndex = calculateNextIndexLinearRoute(train);
         } else {
-            
-            if (currentIndex >= stationIds.size() - 1) {
+            if (currentIndex >= stations.size() - 1) {
                 nextIndex = 0;
             } else {
                 nextIndex = currentIndex + 1;
             }
         }
-
         return nextIndex;
     }
 
-    public String getNextStationLinearAndCyclicalRoute(Train train, Route route, List<String> stationIds) {
-        int nextIndex = calculateNextIndexLinearAndCyclicalRoute(train, route, stationIds);
-        String nextStationId = stationIds.get(nextIndex);
+    public String getNextStationLinearAndCyclicalRoute(Train train) {
+        int nextIndex = calculateNextIndexLinearAndCyclicalRoute(train);
+        String nextStationId = stations.get(nextIndex);
         return nextStationId;
+    }
+
+    
+    public void updateRouteIndexOnArrival(Train train) {
+        int nextIndex = 0;
+        if (train instanceof PassengerTrain || train instanceof CargoTrain) {
+            nextIndex = calculateNextIndexLinearRoute(train);
+        } else if (train instanceof BulletTrain) {
+            nextIndex = calculateNextIndexLinearAndCyclicalRoute(train);
+        }
+        this.setRouteIndex(nextIndex);
     }
 }

@@ -185,7 +185,15 @@ public class TrainsController {
 
     public void createPerishableCargo(String startStationId, String destStationId, String cargoId, int weight,
             int minsTillPerish) {
-        // Todo: Task biii
+    
+        Station startStation = Station.getStationById(startStationId, stations);
+        Load perishableCargo = new PerishableCargo(cargoId, startStation, destStationId, weight, minsTillPerish);
+
+        try {
+            startStation.addLoadToStation(perishableCargo);
+        } catch (UNSWException e) {
+            e.printStackTrace();
+        }
     }
 
     public void createTrack(String trackId, String fromStationId, String toStationId, boolean isBreakable) {

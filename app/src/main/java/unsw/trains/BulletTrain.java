@@ -19,9 +19,7 @@ public class BulletTrain extends Train {
     @Override
     public void move(List<Station> stations) {
         Route route = this.getRoute();
-        List<String> stationIds = route.getStations();
-
-        String nextStationId = route.getNextStationLinearAndCyclicalRoute((Train) this, route, stationIds);
+        String nextStationId = route.getNextStationLinearAndCyclicalRoute((Train) this);
         super.setNewPosition(nextStationId, stations);
        
     }

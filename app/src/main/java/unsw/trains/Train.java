@@ -50,7 +50,7 @@ public abstract class Train {
             }
 
             nextStation.disembark(loadsOnTrain, nextStationId);
-            route.updateRouteIndexOnArrival(this, route, route.getStations());
+            route.updateRouteIndexOnArrival(this);
             this.setCurrentPosition(nextStationPosition);
             this.setCurrentStation(nextStation.getStationId());
             
@@ -59,7 +59,6 @@ public abstract class Train {
         }
     }
 
-    
     public static Train getTrainById(String trainId, List<Train> trains) {   
         Train findTrain = null;
         for (Train train: trains) {
