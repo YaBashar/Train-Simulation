@@ -16,7 +16,11 @@ import unsw.utils.TrackType;
  */
 public class TrainsController {
 
-    private TrainSystemData data;
+    private List<Train> trains = new ArrayList<Train>();
+    private List<Station> stations = new ArrayList<Station>();
+    private List<Track> tracks = new ArrayList<Track>();
+
+    private TrainSystemData data = new TrainSystemData(stations, tracks, trains);
 
     public void createStation(String stationId, String type, double x, double y) {
         if (type.equals("PassengerStation")) {

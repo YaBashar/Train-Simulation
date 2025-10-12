@@ -31,7 +31,6 @@ public class TrainSystemData {
         Train findTrain = null;
         for (Train train: trains) {
             if (train.getTrainId().equals(trainId)) {
-                trains.remove(train);
                 findTrain = train;
                 break;
             }

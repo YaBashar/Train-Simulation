@@ -1,8 +1,6 @@
 package unsw.trains;
-
 import java.util.List;
 
-import unsw.utils.Position;
 
 public abstract class Load {
     
@@ -15,7 +13,6 @@ public abstract class Load {
     public Load(String loadId, int weight, String startStation, String destination) {
         this.loadId = loadId;
         this.weight = weight;
-        this.start = start;
         this.destination = destination;
     }
 

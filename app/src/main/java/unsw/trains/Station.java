@@ -21,6 +21,7 @@ public abstract class Station {
         this.stationId = stationId;
         this.type = type;
         this.pos = new Position(x, y);
+        this.data = data;
     }
 
     public abstract void addLoadToStation(Load load) throws UNSWException;
