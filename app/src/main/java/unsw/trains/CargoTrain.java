@@ -1,5 +1,4 @@
 package unsw.trains;
-import java.util.ArrayList;
 import java.util.List;
 
 import unsw.exceptions.InvalidRouteException;
@@ -26,7 +25,7 @@ public class CargoTrain extends Train {
     
     public CargoTrain(String trainId, String type, String stationId, Position pos, List<String> route, List<Track> tracks) throws InvalidRouteException {
         super(trainId, type, stationId, pos, route, tracks);
-        super.setSpeed(3);
+        super.setSpeed(3.0);
 
         Route trainRoute = super.getRoute();
         boolean isCycle = trainRoute.isCyclical();
@@ -49,9 +48,16 @@ public class CargoTrain extends Train {
     public boolean canAcceptLoad(Load load) {
         if (load.getType().equals("Cargo") && this.currentWeightOnBoard <= maxWeightOnBoard) {
             this.currentWeightOnBoard += load.getWeight();
+            slowDownCargo(currentWeightOnBoard);
             return true;
         }
 
         return false;
+    }
+
+    public void slowDownCargo(int totalWeight) {
+        double slowDownFactor = (double)totalWeight * 0.01;
+        double newSpeed = (100 - slowDownFactor) * getSpeed() / 100;
+        setSpeed(newSpeed);
     }
 }

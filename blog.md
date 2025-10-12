@@ -19,3 +19,8 @@ and rather these actions happen from the context of the station. (You embark fro
 disembark on to a station)
 
 This also meant that train was only responsible for movement and not managing loads activity
+
+Then implemented cargo slowdown
+
+
+Week 3)

@@ -25,7 +25,7 @@ public class PassengerTrain extends Train {
 
     public PassengerTrain(String trainId, String type, String stationId, Position pos, List<String> route, List<Track> tracks) throws InvalidRouteException{
         super(trainId, type, stationId, pos, route, tracks);
-        super.setSpeed(2);
+        super.setSpeed(2.0);
 
         Route trainRoute = super.getRoute();
         boolean isCycle = trainRoute.isCyclical();

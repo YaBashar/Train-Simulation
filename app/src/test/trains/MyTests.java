@@ -269,7 +269,52 @@ public class MyTests {
         controller.simulate();
         assertEquals(new Position(4.0, 0.0), controller.getTrainInfo("train1").getPosition());
         assertEquals(1, controller.getStationInfo("s2").getLoads().size());
-         assertEquals(List.of(), controller.getTrainInfo("train1").getLoads());
+        assertEquals(List.of(), controller.getTrainInfo("train1").getLoads());
 
+    }
+
+    @Test
+    public void testCargoTrainPickUp() {
+        TrainsController controller = new TrainsController();
+        controller.createStation("s1", "CargoStation", 0, 0);
+        controller.createStation("s2", "CargoStation", 3, 0);
+        controller.createStation("s3", "CargoStation", 6, 0);
+        controller.createTrack("t1-2", "s1", "s2");
+
+        controller.createCargo("s1", "s2", "c1", 1000);
+        assertDoesNotThrow(() -> {
+            controller.createTrain("train1", "CargoTrain", "s1", List.of("s1", "s2", "s3"));
+        });
+
+        assertEquals(new Position(0.0, 0.0), controller.getTrainInfo("train1").getPosition());
+
+        controller.simulate();
+        assertEquals(List.of(new LoadInfoResponse("c1", "Cargo")), controller.getTrainInfo("train1").getLoads());
+        assertEquals(0, controller.getStationInfo("s1").getLoads().size());
+
+        assertEquals(new Position(2.7, 0.0), controller.getTrainInfo("train1").getPosition());
+    }
+
+    @Test
+    public void testBulletTrainPickUp() {
+        TrainsController controller = new TrainsController();
+        controller.createStation("s1", "CentralStation", 0, 0);
+        controller.createStation("s2", "CentralStation", 5, 0);
+        controller.createStation("s3", "CentralStation", 10, 0);
+        controller.createTrack("t1-2", "s1", "s2");
+
+        controller.createCargo("s1", "s2", "c1", 1000);
+        controller.createPassenger("s1", "s2", "p1");
+        assertDoesNotThrow(() -> {
+            controller.createTrain("train1", "BulletTrain", "s1", List.of("s1", "s2", "s3"));
+        });
+
+        assertEquals(new Position(0.0, 0.0), controller.getTrainInfo("train1").getPosition());
+
+        controller.simulate();
+        assertEquals(List.of(new LoadInfoResponse("c1", "Cargo"), new LoadInfoResponse("p1", "Passenger")), controller.getTrainInfo("train1").getLoads());
+        assertEquals(0, controller.getStationInfo("s1").getLoads().size());
+
+        assertEquals(new Position(4.5, 0.0), controller.getTrainInfo("train1").getPosition());
     }
 }
