@@ -16,51 +16,53 @@ import unsw.utils.TrackType;
  */
 public class TrainsController {
 
-    private List <Station> stations = new ArrayList<Station>();
-    private List <Track> tracks = new ArrayList<Track>();
-    private List <Train> trains = new ArrayList<Train>();
+    private TrainSystemData data;
 
     public void createStation(String stationId, String type, double x, double y) {
-        Station station = null;
-
         if (type.equals("PassengerStation")) {
-            station = new PassengerStation(stationId, type, x, y);
+            Station station = new PassengerStation(stationId, type, x, y, data);
+            data.addStation(station);
 
         } else if (type.equals("CargoStation")) {
-            station = new CargoStation(stationId, type, x, y);
+            Station station = new CargoStation(stationId, type, x, y, data);
+            data.addStation(station);
 
         } else if (type.equals("CentralStation")) {
-            station = new CentralStation(stationId, type, x, y);
+            Station station = new CentralStation(stationId, type, x, y, data);
+            data.addStation(station);
 
         } else if (type.equals("DepotStation")) {
-            station = new DepotStation(stationId, type, x, y);
+            Station station = new DepotStation(stationId, type, x, y, data);
+            data.addStation(station);
         }
 
-        stations.add(station);
     }
 
     public void createTrack(String trackId, String fromStationId, String toStationId) {
         Track track = new Track(trackId, fromStationId, toStationId);
-        tracks.add(track);
+        data.addTrack(track);
     }
 
     public void createTrain(String trainId, String type, String stationId, List<String> route)
             throws InvalidRouteException {
         
-        Station startStation = Station.getStationById(stationId, stations);
-        Train train = null;
-
+        Station startStation = data.getStationById(stationId);
+        Train train;
+            
         if (type.equals("PassengerTrain")) {
-            train = new PassengerTrain(trainId, type, stationId, startStation.getPos(), route, tracks);
-
+            train = new PassengerTrain(trainId, type, stationId, startStation.getPos(), route, data);
+            data.addTrain(train);
         } else if (type.equals("CargoTrain")) {
-            train = new CargoTrain(trainId, type, stationId, startStation.getPos(), route, tracks);
+            train = new CargoTrain(trainId, type, stationId, startStation.getPos(), route, data);
+            data.addTrain(train);
 
         } else if (type.equals("BulletTrain")) {
-            train = new BulletTrain(trainId, type, stationId, startStation.getPos(), route, tracks);
+            train = new BulletTrain(trainId, type, stationId, startStation.getPos(), route, data);
+            data.addTrain(train);
+        } else {
+            return;
         }
 
-        trains.add(train);
         try {
             startStation.addTrainToStation(train);
         } catch (UNSWException e) {
@@ -70,7 +72,7 @@ public class TrainsController {
 
     public List<String> listStationIds() {
         ArrayList<String> stationList = new ArrayList<>();
-        for (Station station: stations) {
+        for (Station station: data.getStations()) {
             stationList.add(station.getStationId());
         }
         return stationList;
@@ -78,7 +80,8 @@ public class TrainsController {
 
     public List<String> listTrackIds() {
         ArrayList<String> trackList = new ArrayList<>();
-        for (Track track: tracks) {
+
+        for (Track track: data.getTracks()) {
             trackList.add(track.getTrackId());
         }
         return trackList;
@@ -86,25 +89,17 @@ public class TrainsController {
 
     public List<String> listTrainIds() {
         ArrayList<String> trainList = new ArrayList<>();
-        for (Train train: trains) {
+        for (Train train: data.getTrains()) {
             trainList.add(train.getTrainId());
         }
         return trainList;
     }
 
     public TrainInfoResponse getTrainInfo(String trainId) {
-
-        
-        Train findTrain = null;
-        for (Train train: trains) {
-            if (train.getTrainId().equals(trainId)) {
-                findTrain = train;
-                break;
-            }
-        }
-
+        Train findTrain = data.getTrainById(trainId);
         List<LoadInfoResponse> loadInfos = new ArrayList<LoadInfoResponse>();
         List<Load> loads = findTrain.getLoadsOnTrain();
+
         for (Load load: loads) {
             LoadInfoResponse loadInfo = new LoadInfoResponse(load.getloadId(), load.getType());
             loadInfos.add(loadInfo);
@@ -115,7 +110,7 @@ public class TrainsController {
     }
 
     public StationInfoResponse getStationInfo(String stationId) {
-        Station findStation = Station.getStationById(stationId, stations);
+        Station findStation = data.getStationById(stationId);
 
         List<TrainInfoResponse> trainInfos = new ArrayList<TrainInfoResponse>();
         List<Train> trains = findStation.getTrainsAtStation();
@@ -136,16 +131,17 @@ public class TrainsController {
     }
 
     public TrackInfoResponse getTrackInfo(String trackId) {
-        Track findTrack = Track.getTrackById(trackId, tracks);
+        Track findTrack = data.getTrackById(trackId);
         TrackInfoResponse t = new TrackInfoResponse(trackId, findTrack.getFromStationId(), findTrack.getToStationId(),  TrackType.NORMAL, 10);
         return t;
     }
 
     public void simulate() {
         // Move train based on ids in lexigraphcial order
+        List<Train> trains = data.getTrains();
         trains.sort(Comparator.comparing(Train:: getTrainId));
         for (Train train: trains) {
-           train.move(stations);
+           train.move();
         }
     }
 
@@ -160,10 +156,8 @@ public class TrainsController {
     }
 
     public void createPassenger(String startStationId, String destStationId, String passengerId) {
-        // Todo: Task cii
-        Station startStation = Station.getStationById(startStationId, stations);
-        Load passenger = new Passenger(passengerId, startStation, destStationId);
-        // startStation.add(passenger);
+        Station startStation = data.getStationById(startStationId);
+        Load passenger = new Passenger(passengerId, startStationId, destStationId);
 
         try {
             startStation.addLoadToStation(passenger);
@@ -173,9 +167,8 @@ public class TrainsController {
     }
 
     public void createCargo(String startStationId, String destStationId, String cargoId, int weight) {
-        // Todo: Task bii
-        Station startStation = Station.getStationById(startStationId, stations);
-        Load cargo = new Cargo(cargoId, startStation, destStationId, weight);
+        Station startStation = data.getStationById(startStationId);
+        Load cargo = new Cargo(cargoId, startStationId, destStationId, weight);
         try {
             startStation.addLoadToStation(cargo);
         } catch (UNSWException e) {
@@ -186,8 +179,8 @@ public class TrainsController {
     public void createPerishableCargo(String startStationId, String destStationId, String cargoId, int weight,
             int minsTillPerish) {
     
-        Station startStation = Station.getStationById(startStationId, stations);
-        Load perishableCargo = new PerishableCargo(cargoId, startStation, destStationId, weight, minsTillPerish);
+        Station startStation = data.getStationById(startStationId);
+        Load perishableCargo = new PerishableCargo(cargoId, startStationId, destStationId, weight, minsTillPerish);
 
         try {
             startStation.addLoadToStation(perishableCargo);

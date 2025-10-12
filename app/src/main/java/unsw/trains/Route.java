@@ -4,18 +4,15 @@ import java.util.List;
 
 public class Route {
     private List<String> stations;
-    private List<Track> tracks;
+    private TrainSystemData data;
     private int routeIndex;
 
-    public Route(List<String> stationIds, List<Track> tracks) {
+    public Route(List<String> stationIds, TrainSystemData data) {
         this.stations = stationIds;
-        this.tracks = tracks;
+        this.data = data;
     }
 
     
-    public List<Track> getTracks() {
-        return tracks;
-    }
 
     public List<String> getStations() {
         return stations;
@@ -34,7 +31,6 @@ public class Route {
     
     // Methods
     public boolean isCyclical() {
-        List<Track> tracks = this.getTracks();
         List<String> stations = this.getStations();
 
         if (stations.size() < 3) {
@@ -46,7 +42,7 @@ public class Route {
             String lastStationId = stations.get(stations.size() - 1);
             String firstStationId = stations.get(0);
 
-            Track track = Track.getTrackfromStationId(lastStationId, tracks);  
+            Track track = data.getTrackfromStationId(lastStationId);  
             if (track.getToStationId().equals(firstStationId)) {
                 return true;
             }

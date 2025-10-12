@@ -15,8 +15,9 @@ public abstract class Station {
     private Position pos;
     private List<Train> trainsAtStation = new ArrayList<Train>();
     private List<Load> loadsAtStation = new ArrayList<Load>();
+    private TrainSystemData data;
 
-    public Station(String stationId, String type, double x, double y) {
+    public Station(String stationId, String type, double x, double y, TrainSystemData data) {
         this.stationId = stationId;
         this.type = type;
         this.pos = new Position(x, y);
@@ -54,7 +55,7 @@ public abstract class Station {
     }
 
     public void removeTrainFromStation(String trainId) {
-        Train findTrain = Train.getTrainById(trainId, trainsAtStation);
+        Train findTrain = data.getTrainById(trainId);
         disembark(findTrain.getLoadsOnTrain(), trainId);
         this.trainsAtStation.remove(findTrain);
     }
@@ -104,15 +105,5 @@ public abstract class Station {
     }
 
 
-    public static Station getStationById(String stationId, List<Station> stations) {
-        Station findStation = null;
-        for (Station station: stations) {
-            if (station.getStationId().equals(stationId)) {
-                findStation = station;
-                break;
-            }
-        }
-
-        return findStation;
-    }
+   
 }

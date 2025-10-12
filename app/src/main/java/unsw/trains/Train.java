@@ -16,8 +16,9 @@ public abstract class Train {
     private boolean moveBackward;
     private Route route;
     private List<Load> loadsOnTrain;
+    private TrainSystemData data;
     
-    public Train(String trainId, String type, String stationId, Position pos, List<String> stationsInRoute, List<Track> tracks) {
+    public Train(String trainId, String type, String stationId, Position pos, List<String> stationsInRoute, TrainSystemData data) {
         this.trainId = trainId;
         this.type = type;
         this.start = stationId;
@@ -26,16 +27,17 @@ public abstract class Train {
         this.currentPosition = pos;
         this.moveBackward = false;
 
-        this.route = new Route(stationsInRoute, tracks);
+        this.route = new Route(stationsInRoute, data);
         this.loadsOnTrain = new ArrayList<Load>();
+        this.data = data;
     }
 
-    public abstract void move(List<Station> stations);
+    public abstract void move();
     public abstract boolean canAcceptLoad(Load load);
 
-    public void setNewPosition(String nextStationId, List<Station> stations) {
-        Station currentStation = Station.getStationById(this.currentStation, stations);   
-        Station nextStation = Station.getStationById(nextStationId, stations);
+    public void setNewPosition(String nextStationId) {
+        Station currentStation = data.getStationById(this.currentStation);   
+        Station nextStation = data.getStationById(nextStationId);
         currentStation.embarkLoads();
 
         Position nextStationPosition = nextStation.getPos();
@@ -52,24 +54,13 @@ public abstract class Train {
             nextStation.disembark(loadsOnTrain, nextStationId);
             route.updateRouteIndexOnArrival(this);
             this.setCurrentPosition(nextStationPosition);
-            this.setCurrentStation(nextStation.getStationId());
+            this.setCurrentStation(nextStation.getStationId()); 
             
         } else {
             this.setCurrentPosition(destination);
         }
     }
 
-    public static Train getTrainById(String trainId, List<Train> trains) {   
-        Train findTrain = null;
-        for (Train train: trains) {
-            if (train.getTrainId().equals(trainId)) {
-                trains.remove(train);
-                findTrain = train;
-                break;
-            }
-        }
-        return findTrain;
-    }
     
     // Getters and Setters
     public String getTrainId() {

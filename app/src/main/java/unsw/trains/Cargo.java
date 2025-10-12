@@ -3,8 +3,8 @@ package unsw.trains;
 
 public class Cargo extends Load {
     
-    public Cargo(String cargoId, Station startStation, String destStation, int weight) {
-        super(cargoId, weight, startStation.getPos(), destStation);
+    public Cargo(String cargoId, String startStation, String destStation, int weight) {
+        super(cargoId, weight, startStation, destStation);
         super.setType("Cargo");
     }
 

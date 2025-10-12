@@ -8,8 +8,8 @@ import unsw.exceptions.UNSWException;
 public class CargoStation  extends Station {
     private final int maxTrains = 4;
 
-    public CargoStation(String stationId, String type, double x, double y) {
-        super(stationId, type, x, y);
+    public CargoStation(String stationId, String type, double x, double y, TrainSystemData data) {
+        super(stationId, type, x, y, data);
     }
 
     @Override

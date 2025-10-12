@@ -37,27 +37,6 @@ public class Track {
         this.toStationId = toStationId;
     }
 
-    public static Track getTrackById(String TrackId, List<Track> Tracks) {
-        Track findTrack = null;
-        for (Track Track: Tracks) {
-            if (Track.getTrackId().equals(TrackId)) {
-                findTrack = Track;
-                break;
-            }
-        }
+    
 
-        return findTrack;
-    }
-
-    public static Track getTrackfromStationId(String StationId, List<Track> Tracks) {
-        Track findTrack = null;
-        for (Track Track: Tracks) {
-            if (Track.getFromStationId().equals(StationId)) {
-                findTrack = Track;
-                break;
-            }
-        }
-
-        return findTrack;
-    }
 }

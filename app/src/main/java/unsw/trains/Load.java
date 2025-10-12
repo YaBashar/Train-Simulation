@@ -9,13 +9,13 @@ public abstract class Load {
     private String loadId;
     private String type;
     private int weight;
-    private Position currentPosition;
+    private String start;
     private String destination;
     
-    public Load(String loadId, int weight, Position currentPosition, String destination) {
+    public Load(String loadId, int weight, String startStation, String destination) {
         this.loadId = loadId;
         this.weight = weight;
-        this.currentPosition = currentPosition;
+        this.start = start;
         this.destination = destination;
     }
 
@@ -38,14 +38,6 @@ public abstract class Load {
 
     public void setWeight(int weight) {
         this.weight = weight;
-    }
-
-    public Position getCurrentPosition() {
-        return currentPosition;
-    }
-
-    public void setCurrentPosition(Position currentPosition) {
-        this.currentPosition = currentPosition;
     }
 
     public String getDestination() {

@@ -1,5 +1,4 @@
 package unsw.trains;
-import java.util.ArrayList;
 import java.util.List;
 
 import unsw.exceptions.InvalidRouteException;
@@ -23,8 +22,8 @@ public class PassengerTrain extends Train {
         this.currentWeightOnBoard = currentWeightOnBoard;
     }
 
-    public PassengerTrain(String trainId, String type, String stationId, Position pos, List<String> route, List<Track> tracks) throws InvalidRouteException{
-        super(trainId, type, stationId, pos, route, tracks);
+    public PassengerTrain(String trainId, String type, String stationId, Position pos, List<String> route, TrainSystemData data) throws InvalidRouteException{
+        super(trainId, type, stationId, pos, route, data);
         super.setSpeed(2.0);
 
         Route trainRoute = super.getRoute();
@@ -37,11 +36,11 @@ public class PassengerTrain extends Train {
     }
 
     @Override
-    public void move(List<Station> stations) {
+    public void move() {
 
         Route route = this.getRoute();
         String nextStationId = route.getNextStationLinearRoute((Train) this);
-        super.setNewPosition(nextStationId, stations);
+        super.setNewPosition(nextStationId);
 
     }
 

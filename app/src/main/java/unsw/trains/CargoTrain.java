@@ -23,8 +23,8 @@ public class CargoTrain extends Train {
         this.currentWeightOnBoard = currentWeightOnBoard;
     }
     
-    public CargoTrain(String trainId, String type, String stationId, Position pos, List<String> route, List<Track> tracks) throws InvalidRouteException {
-        super(trainId, type, stationId, pos, route, tracks);
+    public CargoTrain(String trainId, String type, String stationId, Position pos, List<String> route, TrainSystemData data) throws InvalidRouteException{
+        super(trainId, type, stationId, pos, route, data);;
         super.setSpeed(3.0);
 
         Route trainRoute = super.getRoute();
@@ -35,11 +35,11 @@ public class CargoTrain extends Train {
     }
 
     @Override
-    public void move(List<Station> stations)  {
+    public void move()  {
 
         Route route = this.getRoute();
         String nextStationId = route.getNextStationLinearRoute((Train) this);
-        super.setNewPosition(nextStationId, stations);
+        super.setNewPosition(nextStationId);
     }
 
     @Override
