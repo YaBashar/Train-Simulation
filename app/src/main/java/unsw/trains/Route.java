@@ -3,18 +3,14 @@ package unsw.trains;
 import java.util.List;
 
 public class Route {
-    private List<String> stations;
-    private TrainSystemData data;
+    private List<Station> stations;
     private int routeIndex;
 
-    public Route(List<String> stationIds, TrainSystemData data) {
-        this.stations = stationIds;
-        this.data = data;
+    public Route(List<Station> stations) {
+        this.stations = stations;
     }
 
-    
-
-    public List<String> getStations() {
+    public List<Station> getStations() {
         return stations;
     }
 
@@ -31,7 +27,7 @@ public class Route {
     
     // Methods
     public boolean isCyclical() {
-        List<String> stations = this.getStations();
+        List<Station> stations = this.getStations();
 
         if (stations.size() < 3) {
             return false;
@@ -39,13 +35,18 @@ public class Route {
         
         // Wrapped in NullPointer try catch as track can equal null if not cyclical
         try {
-            String lastStationId = stations.get(stations.size() - 1);
-            String firstStationId = stations.get(0);
 
-            Track track = data.getTrackfromStationId(lastStationId);  
-            if (track.getToStationId().equals(firstStationId)) {
-                return true;
-            }
+            Station lastStation = stations.get(stations.size() - 1);
+            Station firstStation = stations.get(0);
+            String firstStationId = firstStation.getStationId();
+
+            List<Track> tracks = lastStation.getConnectedTracks();  
+
+            for (Track track: tracks) {
+                if (track.getToStationId().equals(firstStationId)) {
+                    return true;
+                }
+            }    
 
         } catch (NullPointerException e) {
             return false;
@@ -55,7 +56,7 @@ public class Route {
     }
 
     public boolean isLinear() {
-        List<String> stations = this.getStations();
+        List<Station> stations = this.getStations();
 
         if (stations.size() < 3 || this.isCyclical() == true) {
             return false;
@@ -91,9 +92,9 @@ public class Route {
         return nextIndex;
     }
 
-    public String getNextStationLinearRoute(Train train) {
+    public Station getNextStationLinearRoute(Train train) {
         int nextIndex = calculateNextIndexLinearRoute(train);
-        String nextStationId = stations.get(nextIndex);
+        Station nextStationId = stations.get(nextIndex);
         return nextStationId;
     }
 
@@ -114,9 +115,9 @@ public class Route {
         return nextIndex;
     }
 
-    public String getNextStationLinearAndCyclicalRoute(Train train) {
+    public Station getNextStationLinearAndCyclicalRoute(Train train) {
         int nextIndex = calculateNextIndexLinearAndCyclicalRoute(train);
-        String nextStationId = stations.get(nextIndex);
+        Station nextStationId = stations.get(nextIndex);
         return nextStationId;
     }
 

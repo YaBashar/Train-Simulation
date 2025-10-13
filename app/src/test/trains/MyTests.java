@@ -318,4 +318,50 @@ public class MyTests {
         assertEquals(new Position(4.5, 0.0), controller.getTrainInfo("train1").getPosition());
     }
 
+    @Test
+    public void testPerishableCargoPickUpFalse() {
+        TrainsController controller = new TrainsController();
+        controller.createStation("s1", "CargoStation", 0, 0);
+        controller.createStation("s2", "CargoStation", 12, 0);
+        controller.createTrack("t1-2", "s1", "s2");
+
+        controller.createPerishableCargo("s1", "s2", "c1", 100, 10);
+        assertDoesNotThrow(() -> {
+            controller.createTrain("train1", "CargoTrain", "s1", List.of("s1", "s2"));
+        });
+
+        // Check that the load was created at the station.
+        assertEquals(List.of(new LoadInfoResponse("c1", "PerishableCargo")), controller.getStationInfo("s1").getLoads());
+
+        // After the first tick, the train with id t1 should have picked up the passenger.
+        controller.simulate();
+        assertEquals(new Position(3.0, 0.0), controller.getTrainInfo("train1").getPosition());
+        assertEquals(1, controller.getStationInfo("s1").getLoads().size());
+        assertEquals(List.of(), controller.getTrainInfo("train1").getLoads());
+
+    }
+
+    // @Test
+    // public void testPerishableCargoPickUpTrue() {
+    //     TrainsController controller = new TrainsController();
+    //     controller.createStation("s1", "CargoStation", 0, 0);
+    //     controller.createStation("s2", "CargoStation", 3, 0);
+    //     controller.createTrack("t1-2", "s1", "s2");
+
+    //     controller.createPerishableCargo("s1", "s2", "c1", 100, 2);
+    //     assertDoesNotThrow(() -> {
+    //         controller.createTrain("train1", "CargoTrain", "s1", List.of("s1", "s2"));
+    //     });
+
+    //     // Check that the load was created at the station.
+    //     assertEquals(List.of(new LoadInfoResponse("c1", "PerishableCargo")), controller.getStationInfo("s1").getLoads());
+
+    //     // After the first tick, the train with id t1 should have picked up the passenger.
+    //     controller.simulate();
+    //     assertEquals(new Position(3.0, 0.0), controller.getTrainInfo("train1").getPosition());
+    //     assertEquals(0, controller.getStationInfo("s1").getLoads().size());
+    //     assertEquals(List.of(new LoadInfoResponse("c1", "PerishableCargo")), controller.getTrainInfo("train1").getLoads());
+
+    // }
+
 }

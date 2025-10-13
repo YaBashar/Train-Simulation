@@ -24,19 +24,19 @@ public class TrainsController {
 
     public void createStation(String stationId, String type, double x, double y) {
         if (type.equals("PassengerStation")) {
-            Station station = new PassengerStation(stationId, type, x, y, data);
+            Station station = new PassengerStation(stationId, type, x, y);
             data.addStation(station);
 
         } else if (type.equals("CargoStation")) {
-            Station station = new CargoStation(stationId, type, x, y, data);
+            Station station = new CargoStation(stationId, type, x, y);
             data.addStation(station);
 
         } else if (type.equals("CentralStation")) {
-            Station station = new CentralStation(stationId, type, x, y, data);
+            Station station = new CentralStation(stationId, type, x, y);
             data.addStation(station);
 
         } else if (type.equals("DepotStation")) {
-            Station station = new DepotStation(stationId, type, x, y, data);
+            Station station = new DepotStation(stationId, type, x, y);
             data.addStation(station);
         }
 
@@ -44,6 +44,13 @@ public class TrainsController {
 
     public void createTrack(String trackId, String fromStationId, String toStationId) {
         Track track = new Track(trackId, fromStationId, toStationId);
+
+        Station fromStation = data.getStationById(fromStationId);
+        Station toStation = data.getStationById(toStationId);
+
+        fromStation.getConnectedTracks().add(track);
+        toStation.getConnectedTracks().add(track);
+
         data.addTrack(track);
     }
 
@@ -51,17 +58,24 @@ public class TrainsController {
             throws InvalidRouteException {
         
         Station startStation = data.getStationById(stationId);
+
+        List<Station> stationsInRoute = new ArrayList<Station>();
+        for (String station: route) {
+            Station newStation = data.getStationById(station);
+            stationsInRoute.add(newStation);
+        }
+
         Train train;
             
         if (type.equals("PassengerTrain")) {
-            train = new PassengerTrain(trainId, type, stationId, startStation.getPos(), route, data);
+            train = new PassengerTrain(trainId, type, stationId, startStation.getPos(), stationsInRoute);
             data.addTrain(train);
         } else if (type.equals("CargoTrain")) {
-            train = new CargoTrain(trainId, type, stationId, startStation.getPos(), route, data);
+            train = new CargoTrain(trainId, type, stationId, startStation.getPos(), stationsInRoute);
             data.addTrain(train);
 
         } else if (type.equals("BulletTrain")) {
-            train = new BulletTrain(trainId, type, stationId, startStation.getPos(), route, data);
+            train = new BulletTrain(trainId, type, stationId, startStation.getPos(), stationsInRoute);
             data.addTrain(train);
         } else {
             return;
@@ -145,7 +159,9 @@ public class TrainsController {
         List<Train> trains = data.getTrains();
         trains.sort(Comparator.comparing(Train:: getTrainId));
         for (Train train: trains) {
-           train.move();
+
+           Station currentStation = data.getStationById(train.getCurrentStation());
+           train.move(currentStation);
         }
     }
 

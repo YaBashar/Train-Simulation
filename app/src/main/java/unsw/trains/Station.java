@@ -15,13 +15,12 @@ public abstract class Station {
     private Position pos;
     private List<Train> trainsAtStation = new ArrayList<Train>();
     private List<Load> loadsAtStation = new ArrayList<Load>();
-    private TrainSystemData data;
+    private List<Track> connectedTracks = new ArrayList<Track>();
 
-    public Station(String stationId, String type, double x, double y, TrainSystemData data) {
+    public Station(String stationId, String type, double x, double y) {
         this.stationId = stationId;
         this.type = type;
         this.pos = new Position(x, y);
-        this.data = data;
     }
 
     public abstract void addLoadToStation(Load load) throws UNSWException;
@@ -44,7 +43,7 @@ public abstract class Station {
         this.loadsAtStation.removeAll(embarkedLoads);
     }
     
-    public void disembark(List<Load> loadsOnTrain, String stationId) {
+    public void disembark(List<Load> loadsOnTrain) {
         List<Load> disembarkingLoads = new ArrayList<Load>();
         for (Load load: loadsOnTrain) {
             if (load.getDestination().equals(stationId)) {
@@ -55,10 +54,9 @@ public abstract class Station {
         loadsOnTrain.removeAll(disembarkingLoads);    
     }
 
-    public void removeTrainFromStation(String trainId) {
-        Train findTrain = data.getTrainById(trainId);
-        disembark(findTrain.getLoadsOnTrain(), trainId);
-        this.trainsAtStation.remove(findTrain);
+    public void removeTrainFromStation(Train train) {
+        disembark(train.getLoadsOnTrain());
+        this.trainsAtStation.remove(train);
     }
     
 
@@ -105,6 +103,9 @@ public abstract class Station {
         this.loadsAtStation.add(load);
     }
 
+    public List<Track> getConnectedTracks() {
+        return connectedTracks;
+    }
 
    
 }

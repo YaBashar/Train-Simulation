@@ -16,18 +16,6 @@ public abstract class Load {
         this.destination = destination;
     }
 
-    public static Load getLoadById(String loadId, List<Load> loads) {
-        Load findload = null;
-        for (Load load: loads) {
-            if (load.getloadId().equals(loadId)) {
-                findload = load;
-                break;
-            }
-        }
-
-        return findload;
-    }
-
     // Getters and Setters
     public int getWeight() {
         return weight;

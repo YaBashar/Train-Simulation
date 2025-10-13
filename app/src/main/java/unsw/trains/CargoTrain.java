@@ -23,8 +23,8 @@ public class CargoTrain extends Train {
         this.currentWeightOnBoard = currentWeightOnBoard;
     }
     
-    public CargoTrain(String trainId, String type, String stationId, Position pos, List<String> route, TrainSystemData data) throws InvalidRouteException{
-        super(trainId, type, stationId, pos, route, data);;
+    public CargoTrain(String trainId, String type, String stationId, Position pos, List<Station> stations) throws InvalidRouteException{
+        super(trainId, type, stationId, pos, stations);
         super.setSpeed(3.0);
 
         Route trainRoute = super.getRoute();
@@ -35,11 +35,12 @@ public class CargoTrain extends Train {
     }
 
     @Override
-    public void move()  {
+    public void move(Station currentStation) {
 
         Route route = this.getRoute();
-        String nextStationId = route.getNextStationLinearRoute((Train) this);
-        super.setNewPosition(nextStationId);
+        Station nextStation = route.getNextStationLinearRoute((Train) this);
+        super.setNewPosition(currentStation, nextStation);;
+
     }
 
     @Override
@@ -54,7 +55,44 @@ public class CargoTrain extends Train {
             return true;
         }
 
+        if (load.getType().equals("PerishableCargo") && this.currentWeightOnBoard <= maxWeightOnBoard) {
+            PerishableCargo cargo = (PerishableCargo) load;
+            if (canTakePerishableCargo(cargo)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
         return false;
+    }
+
+    public boolean canTakePerishableCargo(PerishableCargo cargo) {
+        
+        Route route = this.getRoute();
+        Position currentPosition = this.getCurrentPosition();
+        String currentStation = this.getCurrentStation();
+
+        int startingRouteIndex = route.getRouteIndex();
+
+        while (currentStation != cargo.getDestination()) {
+            
+            Station nextStation = route.getNextStationLinearRoute(this);
+            Position nextStationPosition = nextStation.getPos();
+
+            if (currentPosition.isInBound(nextStationPosition, this.getSpeed())) {
+                currentStation = nextStation.getStationId();
+                route.updateRouteIndexOnArrival(this);
+            } 
+
+            cargo.deteriorate();
+            if (cargo.getMinsToPerish() <= 0) {
+                return false;
+            }
+        }
+
+        route.setRouteIndex(startingRouteIndex);
+        return true;
     }
 
 }

@@ -10,8 +10,8 @@ public class BulletTrain extends Train {
     private int currentWeightOnBoard;
     private int totalCargoWeightOnBoard;
 
-     public BulletTrain(String trainId, String type, String stationId, Position pos, List<String> route, TrainSystemData data) throws InvalidRouteException{
-        super(trainId, type, stationId, pos, route, data);
+     public BulletTrain(String trainId, String type, String stationId, Position pos, List<Station> stations) throws InvalidRouteException{
+        super(trainId, type, stationId, pos, stations);
         super.setSpeed(5.0);
 
         this.currentWeightOnBoard = 0;
@@ -19,11 +19,12 @@ public class BulletTrain extends Train {
     }
 
     @Override
-    public void move() {
+    public void move(Station currentStation) {
+
         Route route = this.getRoute();
-        String nextStationId = route.getNextStationLinearAndCyclicalRoute((Train) this);
-        super.setNewPosition(nextStationId);
-       
+        Station nextStation = route.getNextStationLinearAndCyclicalRoute((Train) this);
+        super.setNewPosition(currentStation, nextStation);;
+
     }
 
     @Override

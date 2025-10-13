@@ -9,8 +9,8 @@ public class DepotStation extends Station {
 
     private final int maxTrains = 8;
 
-    public DepotStation(String stationId, String type, double x, double y, TrainSystemData data) {
-        super(stationId, type, x, y, data);
+    public DepotStation(String stationId, String type, double x, double y) {
+        super(stationId, type, x, y);
     }
 
     @Override

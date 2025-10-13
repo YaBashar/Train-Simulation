@@ -12,32 +12,27 @@ public abstract class Train {
     private String currentStation; 
     private Position currentPosition;
     private double speed;
-    private List<String> stationsInRoute;
     private boolean moveBackward;
     private Route route;
     private List<Load> loadsOnTrain;
-    private TrainSystemData data;
     
-    public Train(String trainId, String type, String stationId, Position pos, List<String> stationsInRoute, TrainSystemData data) {
+    public Train(String trainId, String type, String stationId, Position pos, List<Station> stations) {
         this.trainId = trainId;
         this.type = type;
         this.start = stationId;
         this.currentStation = stationId;
-        this.stationsInRoute = stationsInRoute;
         this.currentPosition = pos;
         this.moveBackward = false;
 
-        this.route = new Route(stationsInRoute, data);
+        this.route = new Route(stations);
         this.loadsOnTrain = new ArrayList<Load>();
-        this.data = data;
     }
 
-    public abstract void move();
+    public abstract void move(Station currentStation);
     public abstract boolean canAcceptLoad(Load load);
 
-    public void setNewPosition(String nextStationId) {
-        Station currentStation = data.getStationById(this.currentStation);   
-        Station nextStation = data.getStationById(nextStationId);
+    public void setNewPosition(Station currentStation, Station nextStation) {
+        
         currentStation.embarkLoads();
 
         Position nextStationPosition = nextStation.getPos();
@@ -45,13 +40,13 @@ public abstract class Train {
 
         if (this.currentPosition.isInBound(nextStationPosition, this.getSpeed())) {
             try {
-                currentStation.removeTrainFromStation(this.getTrainId());
+                currentStation.removeTrainFromStation(this);
                 nextStation.addTrainToStation(this);
             } catch (Exception e) {
                 return;
             }
 
-            nextStation.disembark(loadsOnTrain, nextStationId);
+            nextStation.disembark(loadsOnTrain);
             route.updateRouteIndexOnArrival(this);
             this.setCurrentPosition(nextStationPosition);
             this.setCurrentStation(nextStation.getStationId()); 
