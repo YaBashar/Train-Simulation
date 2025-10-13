@@ -1,5 +1,7 @@
 package unsw.trains;
 
+import unsw.utils.Position;
+
 public class PerishableCargo extends Cargo {
 
     private int minsToPerish;
@@ -20,6 +22,41 @@ public class PerishableCargo extends Cargo {
 
     public void setMinsToPerish(int minsToPerish) {
         this.minsToPerish = minsToPerish;
+    }
+
+    // need to immediately remove expired cargo and recalculate speed
+
+    public boolean canTakePerishableCargo(Train train) {
+        
+        Route route = train.getRoute();
+        Position currentPosition = train.getCurrentPosition();
+        String currentStation = train.getCurrentStation();
+
+        int startingRouteIndex = route.getRouteIndex();
+
+        while (currentStation != this.getDestination()) {
+            
+            Station nextStation = route.getNextStationLinearRoute(train);
+            Position nextStationPosition = nextStation.getPos();
+            Position destination = currentPosition.calculateNewPosition(nextStationPosition, train.getSpeed());
+
+            if (currentPosition.isInBound(nextStationPosition, train.getSpeed())) {
+                currentStation = nextStation.getStationId();
+                currentPosition = nextStationPosition;
+                route.updateRouteIndexOnArrival(train);
+            } else {
+                currentPosition = destination;
+            }
+
+            this.deteriorate();
+            if (this.getMinsToPerish() <= 0) {
+                train.getLoadsOnTrain().remove(this);
+                return false;
+            }
+        }
+
+        route.setRouteIndex(startingRouteIndex);
+        return true;
     }
 
 }

@@ -45,6 +45,20 @@ public class BulletTrain extends Train {
             return true;
         }
 
+        if (load.getType().equals("PerishableCargo") && this.currentWeightOnBoard <= maxWeightOnBoard) {
+            PerishableCargo cargo = (PerishableCargo) load;
+
+            if (cargo.canTakePerishableCargo((Train) this)) {
+
+                double newSpeed = cargo.slowDownTrain(currentWeightOnBoard, this.getSpeed());
+                this.setSpeed(newSpeed);
+
+                return true;
+            } else {
+                return false;
+            }
+        }
+
         return false;
     }
 

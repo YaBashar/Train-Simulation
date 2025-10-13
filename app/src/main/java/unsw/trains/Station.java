@@ -55,7 +55,6 @@ public abstract class Station {
     }
 
     public void removeTrainFromStation(Train train) {
-        disembark(train.getLoadsOnTrain());
         this.trainsAtStation.remove(train);
     }
     
@@ -91,9 +90,6 @@ public abstract class Station {
         return trainsAtStation;
     }
 
-    public void setTrainsAtStation(List<Train> trainsAtStation, Train train) {
-        this.trainsAtStation.add(train);
-    }
 
     public List<Load> getLoadsAtStation() {
         return loadsAtStation;

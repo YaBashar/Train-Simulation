@@ -8,6 +8,7 @@ public class Route {
 
     public Route(List<Station> stations) {
         this.stations = stations;
+        this.routeIndex = 0;
     }
 
     public List<Station> getStations() {

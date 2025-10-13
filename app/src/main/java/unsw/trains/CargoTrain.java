@@ -57,7 +57,12 @@ public class CargoTrain extends Train {
 
         if (load.getType().equals("PerishableCargo") && this.currentWeightOnBoard <= maxWeightOnBoard) {
             PerishableCargo cargo = (PerishableCargo) load;
-            if (canTakePerishableCargo(cargo)) {
+
+            if (cargo.canTakePerishableCargo((Train) this)) {
+
+                double newSpeed = cargo.slowDownTrain(currentWeightOnBoard, this.getSpeed());
+                setSpeed(newSpeed);
+
                 return true;
             } else {
                 return false;
@@ -65,34 +70,6 @@ public class CargoTrain extends Train {
         }
 
         return false;
-    }
-
-    public boolean canTakePerishableCargo(PerishableCargo cargo) {
-        
-        Route route = this.getRoute();
-        Position currentPosition = this.getCurrentPosition();
-        String currentStation = this.getCurrentStation();
-
-        int startingRouteIndex = route.getRouteIndex();
-
-        while (currentStation != cargo.getDestination()) {
-            
-            Station nextStation = route.getNextStationLinearRoute(this);
-            Position nextStationPosition = nextStation.getPos();
-
-            if (currentPosition.isInBound(nextStationPosition, this.getSpeed())) {
-                currentStation = nextStation.getStationId();
-                route.updateRouteIndexOnArrival(this);
-            } 
-
-            cargo.deteriorate();
-            if (cargo.getMinsToPerish() <= 0) {
-                return false;
-            }
-        }
-
-        route.setRouteIndex(startingRouteIndex);
-        return true;
     }
 
 }

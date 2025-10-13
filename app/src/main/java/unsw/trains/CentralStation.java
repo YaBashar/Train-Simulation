@@ -20,7 +20,7 @@ public class CentralStation extends Station {
             throw new UNSWException("Train Capacity Exceeded", "Station Error", 404);
         }
 
-        super.setTrainsAtStation(trainsAtStation, train);
+        super.getTrainsAtStation().add(train);
     }
 
     @Override

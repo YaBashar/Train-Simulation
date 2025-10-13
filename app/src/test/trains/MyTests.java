@@ -325,7 +325,7 @@ public class MyTests {
         controller.createStation("s2", "CargoStation", 12, 0);
         controller.createTrack("t1-2", "s1", "s2");
 
-        controller.createPerishableCargo("s1", "s2", "c1", 100, 10);
+        controller.createPerishableCargo("s1", "s2", "c1", 100, 3);
         assertDoesNotThrow(() -> {
             controller.createTrain("train1", "CargoTrain", "s1", List.of("s1", "s2"));
         });
@@ -341,27 +341,29 @@ public class MyTests {
 
     }
 
-    // @Test
-    // public void testPerishableCargoPickUpTrue() {
-    //     TrainsController controller = new TrainsController();
-    //     controller.createStation("s1", "CargoStation", 0, 0);
-    //     controller.createStation("s2", "CargoStation", 3, 0);
-    //     controller.createTrack("t1-2", "s1", "s2");
+    @Test
+    public void testPerishableCargoPickUpTrue() {
+        TrainsController controller = new TrainsController();
+        controller.createStation("s1", "CargoStation", 0, 0);
+        controller.createStation("s2", "CargoStation", 3, 0);
+        controller.createStation("s3", "CargoStation", 6, 0);
+        controller.createTrack("t1-2", "s1", "s2");
+        controller.createTrack("t2-3", "s2", "s3");
 
-    //     controller.createPerishableCargo("s1", "s2", "c1", 100, 2);
-    //     assertDoesNotThrow(() -> {
-    //         controller.createTrain("train1", "CargoTrain", "s1", List.of("s1", "s2"));
-    //     });
+        controller.createPerishableCargo("s1", "s3", "c1", 100, 4);
+        assertDoesNotThrow(() -> {
+            controller.createTrain("train1", "CargoTrain", "s1", List.of("s1", "s2", "s3"));
+        });
 
-    //     // Check that the load was created at the station.
-    //     assertEquals(List.of(new LoadInfoResponse("c1", "PerishableCargo")), controller.getStationInfo("s1").getLoads());
+        // Check that the load was created at the station.
+        assertEquals(List.of(new LoadInfoResponse("c1", "PerishableCargo")), controller.getStationInfo("s1").getLoads());
 
-    //     // After the first tick, the train with id t1 should have picked up the passenger.
-    //     controller.simulate();
-    //     assertEquals(new Position(3.0, 0.0), controller.getTrainInfo("train1").getPosition());
-    //     assertEquals(0, controller.getStationInfo("s1").getLoads().size());
-    //     assertEquals(List.of(new LoadInfoResponse("c1", "PerishableCargo")), controller.getTrainInfo("train1").getLoads());
+        controller.simulate();
+        assertEquals(new Position(3.0, 0.0), controller.getTrainInfo("train1").getPosition());
+        assertEquals("s2", controller.getTrainInfo("train1").getLocation());
+        assertEquals(0, controller.getStationInfo("s1").getLoads().size());
+        assertEquals(List.of(new LoadInfoResponse("c1", "PerishableCargo")), controller.getTrainInfo("train1").getLoads());
 
-    // }
+    }
 
 }
