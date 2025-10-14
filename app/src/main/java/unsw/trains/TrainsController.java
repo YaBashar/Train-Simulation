@@ -28,17 +28,22 @@ public class TrainsController {
             case "PassengerStation":
                 station = new PassengerStation(stationId, type, x, y);
                 stations.add(station);
+                break;
 
             case "CargoStation":
-                station = new CentralStation(stationId, type, x, y);
-                stations.add(station);
-
-            case "CentralStation":
                 station = new CargoStation(stationId, type, x, y);
                 stations.add(station);
+                break;
+
+            case "CentralStation":
+                station = new CentralStation(stationId, type, x, y);
+                stations.add(station);
+                break;
+
             case "DepotStation":
                 station = new DepotStation(stationId, type, x, y);
                 stations.add(station);
+                break;
             default:
                 break;
         }
@@ -73,14 +78,17 @@ public class TrainsController {
             case "PassengerTrain":
                 train = new PassengerTrain(trainId, type, stationId, startStation.getPos(), stationsInRoute);
                 trains.add(train);
+                break;
 
             case "CargoTrain":
                 train = new CargoTrain(trainId, type, stationId, startStation.getPos(), stationsInRoute);
                 trains.add(train);
+                break;
 
             case "BulletTrain":
                 train = new BulletTrain(trainId, type, stationId, startStation.getPos(), stationsInRoute);
                 trains.add(train);
+                break;
 
             default:
                 break;
