@@ -40,7 +40,7 @@ public class CargoTrain extends Train implements CarriesCargo {
         int totalWeightOnBoard = this.getTotalWeightOnBoard();
         int totalCargoWeightOnBoard = this.getTotalWeightOnBoard();
 
-        if (load.getType().equals("Cargo") && totalWeightOnBoard <= maxWeightOnBoard) {            
+        if (load.getType().equals("Cargo") && totalWeightOnBoard + load.getWeight() <= maxWeightOnBoard) {            
             totalWeightOnBoard += load.getWeight();
             totalCargoWeightOnBoard += load.getWeight();
 
@@ -53,7 +53,7 @@ public class CargoTrain extends Train implements CarriesCargo {
             return true;
         }
 
-        if (load.getType().equals("PerishableCargo") && totalWeightOnBoard <= maxWeightOnBoard) {
+        if (load.getType().equals("PerishableCargo") && totalWeightOnBoard + load.getWeight() <= maxWeightOnBoard) {
             PerishableCargo cargo = (PerishableCargo) load;
 
             if (cargo.canTakePerishableCargo((Train) this)) {

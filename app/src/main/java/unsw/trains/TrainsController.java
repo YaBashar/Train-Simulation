@@ -22,23 +22,26 @@ public class TrainsController {
 
 
     public void createStation(String stationId, String type, double x, double y) {
-        if (type.equals("PassengerStation")) {
-            Station station = new PassengerStation(stationId, type, x, y);
-            stations.add(station);
+        Station station = null;
 
-        } else if (type.equals("CargoStation")) {
-            Station station = new CargoStation(stationId, type, x, y);
-            stations.add(station);
+        switch (type) {
+            case "PassengerStation":
+                station = new PassengerStation(stationId, type, x, y);
+                stations.add(station);
 
-        } else if (type.equals("CentralStation")) {
-            Station station = new CentralStation(stationId, type, x, y);
-            stations.add(station);
+            case "CargoStation":
+                station = new CentralStation(stationId, type, x, y);
+                stations.add(station);
 
-        } else if (type.equals("DepotStation")) {
-            Station station = new DepotStation(stationId, type, x, y);
-            stations.add(station);
+            case "CentralStation":
+                station = new CargoStation(stationId, type, x, y);
+                stations.add(station);
+            case "DepotStation":
+                station = new DepotStation(stationId, type, x, y);
+                stations.add(station);
+            default:
+                break;
         }
-
     }
 
     public void createTrack(String trackId, String fromStationId, String toStationId) {
@@ -64,20 +67,23 @@ public class TrainsController {
             stationsInRoute.add(newStation);
         }
 
-        Train train;
-            
-        if (type.equals("PassengerTrain")) {
-            train = new PassengerTrain(trainId, type, stationId, startStation.getPos(), stationsInRoute);
-            trains.add(train);
-        } else if (type.equals("CargoTrain")) {
-            train = new CargoTrain(trainId, type, stationId, startStation.getPos(), stationsInRoute);
-            trains.add(train);
+        Train train = null;
 
-        } else if (type.equals("BulletTrain")) {
-            train = new BulletTrain(trainId, type, stationId, startStation.getPos(), stationsInRoute);
-            trains.add(train);
-        } else {
-            return;
+        switch(type) {
+            case "PassengerTrain":
+                train = new PassengerTrain(trainId, type, stationId, startStation.getPos(), stationsInRoute);
+                trains.add(train);
+
+            case "CargoTrain":
+                train = new CargoTrain(trainId, type, stationId, startStation.getPos(), stationsInRoute);
+                trains.add(train);
+
+            case "BulletTrain":
+                train = new BulletTrain(trainId, type, stationId, startStation.getPos(), stationsInRoute);
+                trains.add(train);
+
+            default:
+                break;
         }
 
         try {

@@ -39,7 +39,7 @@ public class PassengerTrain extends Train {
 
         int totalWeightOnBoard = this.getTotalWeightOnBoard();
 
-        if (load.getType().equals("Passenger") && totalWeightOnBoard <= maxWeightOnBoard) {
+        if (load.getType().equals("Passenger") && totalWeightOnBoard + load.getWeight() <= maxWeightOnBoard) {
             totalWeightOnBoard += load.getWeight();
             super.setTotalWeightOnBoard(totalWeightOnBoard);
             
