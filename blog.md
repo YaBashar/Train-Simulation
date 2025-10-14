@@ -56,4 +56,25 @@ Moreover I refactored route again so that instead of using a list of tracks, eve
 
 Furthermore I realised I had also violated LSP, by defining recalculateSpeed in the Train superclass, meaning that PassengerClass which doesnt hold cargo also inherited this unnecessary behaviour. To fix this I created an interface carriesCargo so that Cargo and Bullet Train could implement recalculateSpeed instead.
 
+I also realised that cargo and passenger classes were redundant with no functionality and so were removed
+with type being initiated with load.
+
 Lastly I realised that TrainSystemData was redundant and that I could move my helper functions into TrainController class. I chose this approach rather than moving the helper functions such as findStationById into the respective entity class as this would increase coupling.
+
+
+
+Design Comments
+
+Another Design choice I would like to point out is that Load is a composition rather than an aggregation
+as a Load to my interpretation cannot exist unless it is within a station or train and hence cannot exist
+by itself.
+
+The relationship between Station and Train is an aggregation instead of composition as the Train can exist freely without the station (ie on tracks between stations)
+
+The relationship between Staion and Route is also an aggregation as a Station can exist freely without being included within a defined route.
+
+Both Train and Station are abstract classes which contain abstract methods based on the behaviour and constraints on subclasses.
+
+LSP is adhered to with common behaviour defined within the superclass.
+Coupling is minimised as much as possible with coupling between Train -> Station and Station -> Route
+being necessary for this system.
