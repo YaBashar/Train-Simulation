@@ -8,10 +8,4 @@ public class Cargo extends Load {
         super.setType("Cargo");
     }
 
-    public double slowDownTrain(int totalWeight, double speed) {
-        double slowDownFactor = (double)totalWeight * 0.01;
-        double newSpeed = (100 - slowDownFactor) * speed / 100;
-        
-        return newSpeed;
-    }
 }

@@ -10,18 +10,9 @@ import unsw.utils.Position;
  * Speed is slowed depending on how much cargo onboard 
  */
 
-public class CargoTrain extends Train {
+public class CargoTrain extends Train implements CarriesCargo {
 
     private final int maxWeightOnBoard = 5000;
-    private int currentWeightOnBoard;
-
-    public int getCurrentWeightOnBoard() {
-        return currentWeightOnBoard;
-    }
-
-    public void setCurrentWeightOnBoard(int currentWeightOnBoard) {
-        this.currentWeightOnBoard = currentWeightOnBoard;
-    }
     
     public CargoTrain(String trainId, String type, String stationId, Position pos, List<Station> stations) throws InvalidRouteException{
         super(trainId, type, stationId, pos, stations);
@@ -45,25 +36,39 @@ public class CargoTrain extends Train {
 
     @Override
     public boolean canAcceptLoad(Load load) {
-        if (load.getType().equals("Cargo") && this.currentWeightOnBoard <= maxWeightOnBoard) {            
-            this.currentWeightOnBoard += load.getWeight();
 
-            Cargo cargo = (Cargo) load;
-            double newSpeed = cargo.slowDownTrain(currentWeightOnBoard, this.getSpeed());
-            setSpeed(newSpeed);
+        int totalWeightOnBoard = this.getTotalWeightOnBoard();
+        int totalCargoWeightOnBoard = this.getTotalWeightOnBoard();
+
+        if (load.getType().equals("Cargo") && totalWeightOnBoard <= maxWeightOnBoard) {            
+            totalWeightOnBoard += load.getWeight();
+            totalCargoWeightOnBoard += load.getWeight();
+
+            super.setTotalCargoWeightOnBoard(totalCargoWeightOnBoard);
+            super.setTotalCargoWeightOnBoard(totalWeightOnBoard);
+            
+            double newSpeed = recalculateSpeed(totalCargoWeightOnBoard, super.getSpeed());
+            super.setSpeed(newSpeed);
 
             return true;
         }
 
-        if (load.getType().equals("PerishableCargo") && this.currentWeightOnBoard <= maxWeightOnBoard) {
+        if (load.getType().equals("PerishableCargo") && totalWeightOnBoard <= maxWeightOnBoard) {
             PerishableCargo cargo = (PerishableCargo) load;
 
             if (cargo.canTakePerishableCargo((Train) this)) {
 
-                double newSpeed = cargo.slowDownTrain(currentWeightOnBoard, this.getSpeed());
-                setSpeed(newSpeed);
+                totalWeightOnBoard += load.getWeight();
+                totalCargoWeightOnBoard += load.getWeight();
 
+                super.setTotalCargoWeightOnBoard(totalCargoWeightOnBoard);
+                super.setTotalCargoWeightOnBoard(totalWeightOnBoard);
+                
+                double newSpeed = recalculateSpeed(totalCargoWeightOnBoard, super.getSpeed());
+                super.setSpeed(newSpeed);
+                
                 return true;
+
             } else {
                 return false;
             }
@@ -72,4 +77,9 @@ public class CargoTrain extends Train {
         return false;
     }
 
+    public double recalculateSpeed(int totalCargoWeightOnBoard, double speed) {
+        double slowDownFactor = (double) totalCargoWeightOnBoard * 0.01;
+        double newSpeed = (100 - slowDownFactor) * speed / 100;
+        return newSpeed; 
+    }
 }

@@ -39,15 +39,17 @@ public class Route {
 
             Station lastStation = stations.get(stations.size() - 1);
             Station firstStation = stations.get(0);
-            String firstStationId = firstStation.getStationId();
 
-            List<Track> tracks = lastStation.getConnectedTracks();  
-
-            for (Track track: tracks) {
-                if (track.getToStationId().equals(firstStationId)) {
-                    return true;
-                }
-            }    
+            List<String> tracksAtFirstStation = firstStation.getConnectedTracks();
+            List<String> tracksAtLastStation = lastStation.getConnectedTracks();
+            
+            for (String trackId1 : tracksAtFirstStation) {
+                for (String trackId2 : tracksAtLastStation) {
+                    if (trackId1.equals(trackId2)) {
+                        return true;
+                    }
+                } 
+            }
 
         } catch (NullPointerException e) {
             return false;

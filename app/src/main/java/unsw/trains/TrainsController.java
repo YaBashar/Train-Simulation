@@ -20,24 +20,23 @@ public class TrainsController {
     private List<Station> stations = new ArrayList<Station>();
     private List<Track> tracks = new ArrayList<Track>();
 
-    private TrainSystemData data = new TrainSystemData(stations, tracks, trains);
 
     public void createStation(String stationId, String type, double x, double y) {
         if (type.equals("PassengerStation")) {
             Station station = new PassengerStation(stationId, type, x, y);
-            data.addStation(station);
+            stations.add(station);
 
         } else if (type.equals("CargoStation")) {
             Station station = new CargoStation(stationId, type, x, y);
-            data.addStation(station);
+            stations.add(station);
 
         } else if (type.equals("CentralStation")) {
             Station station = new CentralStation(stationId, type, x, y);
-            data.addStation(station);
+            stations.add(station);
 
         } else if (type.equals("DepotStation")) {
             Station station = new DepotStation(stationId, type, x, y);
-            data.addStation(station);
+            stations.add(station);
         }
 
     }
@@ -45,23 +44,23 @@ public class TrainsController {
     public void createTrack(String trackId, String fromStationId, String toStationId) {
         Track track = new Track(trackId, fromStationId, toStationId);
 
-        Station fromStation = data.getStationById(fromStationId);
-        Station toStation = data.getStationById(toStationId);
+        Station fromStation = getStationById(fromStationId);
+        Station toStation = getStationById(toStationId);
 
-        fromStation.getConnectedTracks().add(track);
-        toStation.getConnectedTracks().add(track);
+        fromStation.getConnectedTracks().add(track.getTrackId());
+        toStation.getConnectedTracks().add(track.getTrackId());
 
-        data.addTrack(track);
+        tracks.add(track);
     }
 
     public void createTrain(String trainId, String type, String stationId, List<String> route)
             throws InvalidRouteException {
         
-        Station startStation = data.getStationById(stationId);
+        Station startStation = getStationById(stationId);
 
         List<Station> stationsInRoute = new ArrayList<Station>();
         for (String station: route) {
-            Station newStation = data.getStationById(station);
+            Station newStation = getStationById(station);
             stationsInRoute.add(newStation);
         }
 
@@ -69,14 +68,14 @@ public class TrainsController {
             
         if (type.equals("PassengerTrain")) {
             train = new PassengerTrain(trainId, type, stationId, startStation.getPos(), stationsInRoute);
-            data.addTrain(train);
+            trains.add(train);
         } else if (type.equals("CargoTrain")) {
             train = new CargoTrain(trainId, type, stationId, startStation.getPos(), stationsInRoute);
-            data.addTrain(train);
+            trains.add(train);
 
         } else if (type.equals("BulletTrain")) {
             train = new BulletTrain(trainId, type, stationId, startStation.getPos(), stationsInRoute);
-            data.addTrain(train);
+            trains.add(train);
         } else {
             return;
         }
@@ -90,7 +89,7 @@ public class TrainsController {
 
     public List<String> listStationIds() {
         ArrayList<String> stationList = new ArrayList<>();
-        for (Station station: data.getStations()) {
+        for (Station station: stations) {
             stationList.add(station.getStationId());
         }
         return stationList;
@@ -99,7 +98,7 @@ public class TrainsController {
     public List<String> listTrackIds() {
         ArrayList<String> trackList = new ArrayList<>();
 
-        for (Track track: data.getTracks()) {
+        for (Track track: tracks) {
             trackList.add(track.getTrackId());
         }
         return trackList;
@@ -107,14 +106,14 @@ public class TrainsController {
 
     public List<String> listTrainIds() {
         ArrayList<String> trainList = new ArrayList<>();
-        for (Train train: data.getTrains()) {
+        for (Train train: trains) {
             trainList.add(train.getTrainId());
         }
         return trainList;
     }
 
     public TrainInfoResponse getTrainInfo(String trainId) {
-        Train findTrain = data.getTrainById(trainId);
+        Train findTrain = getTrainById(trainId);
         List<LoadInfoResponse> loadInfos = new ArrayList<LoadInfoResponse>();
         List<Load> loads = findTrain.getLoadsOnTrain();
 
@@ -128,7 +127,7 @@ public class TrainsController {
     }
 
     public StationInfoResponse getStationInfo(String stationId) {
-        Station findStation = data.getStationById(stationId);
+        Station findStation = getStationById(stationId);
 
         List<TrainInfoResponse> trainInfos = new ArrayList<TrainInfoResponse>();
         List<Train> trains = findStation.getTrainsAtStation();
@@ -149,18 +148,52 @@ public class TrainsController {
     }
 
     public TrackInfoResponse getTrackInfo(String trackId) {
-        Track findTrack = data.getTrackById(trackId);
+        Track findTrack = getTrackById(trackId);
         TrackInfoResponse t = new TrackInfoResponse(trackId, findTrack.getFromStationId(), findTrack.getToStationId(),  TrackType.NORMAL, 10);
         return t;
     }
 
+    public Station getStationById(String stationId) {
+        Station findStation = null;
+        for (Station station: this.stations) {
+            if (station.getStationId().equals(stationId)) {
+                findStation = station;
+                break;
+            }
+        }
+
+        return findStation;
+    }
+
+    public Train getTrainById(String trainId) {   
+        Train findTrain = null;
+        for (Train train: trains) {
+            if (train.getTrainId().equals(trainId)) {
+                findTrain = train;
+                break;
+            }
+        }
+        return findTrain;
+    }
+
+    public Track getTrackById(String trackId) {
+        Track findTrack = null;
+        for (Track track: tracks) {
+            if (track.getTrackId().equals(trackId)) {
+                findTrack = track;
+                break;
+            }
+        }
+
+        return findTrack;
+    }
+
     public void simulate() {
         // Move train based on ids in lexigraphcial order
-        List<Train> trains = data.getTrains();
         trains.sort(Comparator.comparing(Train:: getTrainId));
         for (Train train: trains) {
 
-           Station currentStation = data.getStationById(train.getCurrentStation());
+           Station currentStation = getStationById(train.getCurrentStation());
            train.move(currentStation);
         }
     }
@@ -176,7 +209,7 @@ public class TrainsController {
     }
 
     public void createPassenger(String startStationId, String destStationId, String passengerId) {
-        Station startStation = data.getStationById(startStationId);
+        Station startStation = getStationById(startStationId);
         Load passenger = new Passenger(passengerId, startStationId, destStationId);
 
         try {
@@ -187,7 +220,7 @@ public class TrainsController {
     }
 
     public void createCargo(String startStationId, String destStationId, String cargoId, int weight) {
-        Station startStation = data.getStationById(startStationId);
+        Station startStation = getStationById(startStationId);
         Load cargo = new Cargo(cargoId, startStationId, destStationId, weight);
         try {
             startStation.addLoadToStation(cargo);
@@ -199,7 +232,7 @@ public class TrainsController {
     public void createPerishableCargo(String startStationId, String destStationId, String cargoId, int weight,
             int minsTillPerish) {
     
-        Station startStation = data.getStationById(startStationId);
+        Station startStation = getStationById(startStationId);
         Load perishableCargo = new PerishableCargo(cargoId, startStationId, destStationId, weight, minsTillPerish);
 
         try {

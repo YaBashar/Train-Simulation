@@ -359,8 +359,7 @@ public class MyTests {
         assertEquals(List.of(new LoadInfoResponse("c1", "PerishableCargo")), controller.getStationInfo("s1").getLoads());
 
         controller.simulate();
-        assertEquals(new Position(3.0, 0.0), controller.getTrainInfo("train1").getPosition());
-        assertEquals("s2", controller.getTrainInfo("train1").getLocation());
+        assertEquals(new Position(2.97, 0.0), controller.getTrainInfo("train1").getPosition());
         assertEquals(0, controller.getStationInfo("s1").getLoads().size());
         assertEquals(List.of(new LoadInfoResponse("c1", "PerishableCargo")), controller.getTrainInfo("train1").getLoads());
 

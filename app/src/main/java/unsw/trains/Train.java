@@ -13,8 +13,13 @@ public abstract class Train {
     private Position currentPosition;
     private double speed;
     private boolean moveBackward;
+    private boolean isRecalculateSpeed;
     private Route route;
     private List<Load> loadsOnTrain;
+
+    private int totalCargoWeightOnBoard;
+    private int totalWeightOnBoard;
+    
     
     public Train(String trainId, String type, String stationId, Position pos, List<Station> stations) {
         this.trainId = trainId;
@@ -26,6 +31,9 @@ public abstract class Train {
 
         this.route = new Route(stations);
         this.loadsOnTrain = new ArrayList<Load>();
+        this.isRecalculateSpeed = false;
+        this.totalCargoWeightOnBoard = 0;
+        this.totalWeightOnBoard = 0;
     }
 
     public abstract void move(Station currentStation);
@@ -37,6 +45,13 @@ public abstract class Train {
 
         Position nextStationPosition = nextStation.getPos();
         Position destination = this.getCurrentPosition().calculateNewPosition(nextStationPosition, this.getSpeed());
+
+        if (isRecalculateSpeed && this instanceof CarriesCargo) {
+            CarriesCargo train = (CarriesCargo) this;
+            double newSpeed = train.recalculateSpeed(totalCargoWeightOnBoard, speed);
+            setSpeed(newSpeed);
+            isRecalculateSpeed = false;
+        }
 
         if (this.currentPosition.isInBound(nextStationPosition, this.getSpeed())) {
             try {
@@ -54,16 +69,30 @@ public abstract class Train {
         } else {
             this.setCurrentPosition(destination);
         }
+
+        // if any perishable cargo expired remove
+        removeExpiredCargo();
+        setRecalculateSpeed(true);
+    }
+
+    public void removeExpiredCargo() {
+        for (Load load: loadsOnTrain) {
+            if (load.getType().equals("PerishableCargo")) {
+                PerishableCargo cargo = (PerishableCargo) load;
+                if (cargo.getMinsToPerish() == 0) {
+                    loadsOnTrain.remove(cargo);
+
+                    totalCargoWeightOnBoard -= load.getWeight();
+                    totalWeightOnBoard -= load.getWeight();
+                }
+            }
+        }
     }
 
     
     // Getters and Setters
     public String getTrainId() {
         return trainId;
-    }
-
-    public void setTrainId(String trainId) {
-        this.trainId = trainId;
     }
 
     public String getType() {
@@ -76,20 +105,6 @@ public abstract class Train {
 
     public void setSpeed(double speed) {
         this.speed = speed;
-    }
-
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-
-    public String getStart() {
-        return start;
-    }
-
-    public void setStart(String start) {
-        this.start = start;
     }
 
     public Position getCurrentPosition() {
@@ -128,5 +143,29 @@ public abstract class Train {
 
     public void setLoadsOnTrain(Load load) {
         this.loadsOnTrain.add(load);
+    }
+
+    public boolean isRecalculateSpeed() {
+        return isRecalculateSpeed;
+    }
+
+    public void setRecalculateSpeed(boolean recalculateSpeed) {
+        this.isRecalculateSpeed = recalculateSpeed;
+    }
+
+    public int getTotalCargoWeightOnBoard() {
+        return totalCargoWeightOnBoard;
+    }
+
+    public void setTotalCargoWeightOnBoard(int totalCargoWeightOnBoard) {
+        this.totalCargoWeightOnBoard = totalCargoWeightOnBoard;
+    }
+
+    public int getTotalWeightOnBoard() {
+        return totalWeightOnBoard;
+    }
+
+    public void setTotalWeightOnBoard(int totalWeightOnBoard) {
+        this.totalWeightOnBoard = totalWeightOnBoard;
     }
 }

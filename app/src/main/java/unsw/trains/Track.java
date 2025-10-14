@@ -15,26 +15,11 @@ public class Track {
         return trackId;
     }
 
-    public void setTrackId(String trackId) {
-        this.trackId = trackId;
-    }
-
     public String getFromStationId() {
         return fromStationId;
-    }
-
-    public void setFromStationId(String fromStationId) {
-        this.fromStationId = fromStationId;
     }
 
     public String getToStationId() {
         return toStationId;
     }
-
-    public void setToStationId(String toStationId) {
-        this.toStationId = toStationId;
-    }
-
-    
-
 }

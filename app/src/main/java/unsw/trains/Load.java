@@ -1,5 +1,4 @@
 package unsw.trains;
-import java.util.List;
 
 
 public abstract class Load {

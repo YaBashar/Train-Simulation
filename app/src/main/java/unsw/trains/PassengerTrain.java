@@ -12,16 +12,7 @@ import unsw.utils.Position;
 public class PassengerTrain extends Train {
 
     private final int maxWeightOnBoard = 3500;
-    private int currentWeightOnBoard;
-
-    public int getCurrentWeightOnBoard() {
-        return currentWeightOnBoard;
-    }
-
-    public void setCurrentWeightOnBoard(int currentWeightOnBoard) {
-        this.currentWeightOnBoard = currentWeightOnBoard;
-    }
-
+ 
     public PassengerTrain(String trainId, String type, String stationId, Position pos, List<Station> stations) throws InvalidRouteException{
         super(trainId, type, stationId, pos, stations);
         super.setSpeed(2.0);
@@ -32,7 +23,6 @@ public class PassengerTrain extends Train {
             throw new InvalidRouteException("Invalid");
         }
 
-        this.currentWeightOnBoard = 0;
     }
 
     @Override
@@ -47,8 +37,12 @@ public class PassengerTrain extends Train {
     @Override
     public boolean canAcceptLoad(Load load) {
 
-        if (load.getType().equals("Passenger") && this.currentWeightOnBoard <= maxWeightOnBoard) {
-            currentWeightOnBoard += load.getWeight();
+        int totalWeightOnBoard = this.getTotalWeightOnBoard();
+
+        if (load.getType().equals("Passenger") && totalWeightOnBoard <= maxWeightOnBoard) {
+            totalWeightOnBoard += load.getWeight();
+            super.setTotalWeightOnBoard(totalWeightOnBoard);
+            
             return true;
         }
 

@@ -4,18 +4,13 @@ import java.util.List;
 import unsw.exceptions.InvalidRouteException;
 import unsw.utils.Position;
 
-public class BulletTrain extends Train {
+public class BulletTrain extends Train implements CarriesCargo {
    
     private final int maxWeightOnBoard = 5000;
-    private int currentWeightOnBoard;
-    private int totalCargoWeightOnBoard;
-
-     public BulletTrain(String trainId, String type, String stationId, Position pos, List<Station> stations) throws InvalidRouteException{
+   
+    public BulletTrain(String trainId, String type, String stationId, Position pos, List<Station> stations) throws InvalidRouteException{
         super(trainId, type, stationId, pos, stations);
         super.setSpeed(5.0);
-
-        this.currentWeightOnBoard = 0;
-        this.totalCargoWeightOnBoard = 0;
     }
 
     @Override
@@ -29,29 +24,40 @@ public class BulletTrain extends Train {
 
     @Override
     public boolean canAcceptLoad(Load load) {
-        if (load.getType().equals("Passenger") && this.currentWeightOnBoard <= maxWeightOnBoard) {
-            this.currentWeightOnBoard += load.getWeight();
+
+        int totalWeightOnBoard = this.getTotalWeightOnBoard();
+        int totalCargoWeightOnBoard = this.getTotalWeightOnBoard();
+
+        if (load.getType().equals("Passenger") && totalWeightOnBoard <= maxWeightOnBoard) {
+            totalWeightOnBoard += load.getWeight();
             return true;
         }
 
-        if (load.getType().equals("Cargo") && this.currentWeightOnBoard <= maxWeightOnBoard) {
-            this.totalCargoWeightOnBoard += load.getWeight();
-            this.currentWeightOnBoard += load.getWeight();
+        if (load.getType().equals("Cargo") && totalWeightOnBoard <= maxWeightOnBoard) {
+            totalWeightOnBoard += load.getWeight();
+            totalCargoWeightOnBoard += load.getWeight();
 
-            Cargo cargo = (Cargo) load;
-            double newSpeed = cargo.slowDownTrain(totalCargoWeightOnBoard, this.getSpeed());
-            this.setSpeed(newSpeed);
+            super.setTotalCargoWeightOnBoard(totalCargoWeightOnBoard);
+            super.setTotalCargoWeightOnBoard(totalWeightOnBoard);
+
+            double newSpeed = recalculateSpeed(totalCargoWeightOnBoard, super.getSpeed());
+            super.setSpeed(newSpeed);
 
             return true;
         }
 
-        if (load.getType().equals("PerishableCargo") && this.currentWeightOnBoard <= maxWeightOnBoard) {
+        if (load.getType().equals("PerishableCargo") && totalCargoWeightOnBoard <= maxWeightOnBoard) {
             PerishableCargo cargo = (PerishableCargo) load;
 
             if (cargo.canTakePerishableCargo((Train) this)) {
+                totalWeightOnBoard += load.getWeight();
+                totalCargoWeightOnBoard += load.getWeight();
 
-                double newSpeed = cargo.slowDownTrain(currentWeightOnBoard, this.getSpeed());
-                this.setSpeed(newSpeed);
+                super.setTotalCargoWeightOnBoard(totalCargoWeightOnBoard);
+                super.setTotalCargoWeightOnBoard(totalWeightOnBoard);
+
+                double newSpeed = recalculateSpeed(totalCargoWeightOnBoard, super.getSpeed());
+                super.setSpeed(newSpeed);
 
                 return true;
             } else {
@@ -61,5 +67,12 @@ public class BulletTrain extends Train {
 
         return false;
     }
+
+    public double recalculateSpeed(int totalCargoWeightOnBoard, double speed) {
+        double slowDownFactor = (double) totalCargoWeightOnBoard * 0.01;
+        double newSpeed = (100 - slowDownFactor) * speed / 100;
+        return newSpeed; 
+    }
+   
 
 }

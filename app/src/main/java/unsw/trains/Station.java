@@ -15,7 +15,7 @@ public abstract class Station {
     private Position pos;
     private List<Train> trainsAtStation = new ArrayList<Train>();
     private List<Load> loadsAtStation = new ArrayList<Load>();
-    private List<Track> connectedTracks = new ArrayList<Track>();
+    private List<String> connectedTracks = new ArrayList<String>();
 
     public Station(String stationId, String type, double x, double y) {
         this.stationId = stationId;
@@ -99,7 +99,7 @@ public abstract class Station {
         this.loadsAtStation.add(load);
     }
 
-    public List<Track> getConnectedTracks() {
+    public List<String> getConnectedTracks() {
         return connectedTracks;
     }
 

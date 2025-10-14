@@ -24,7 +24,6 @@ public class PerishableCargo extends Cargo {
         this.minsToPerish = minsToPerish;
     }
 
-    // need to immediately remove expired cargo and recalculate speed
 
     public boolean canTakePerishableCargo(Train train) {
         
@@ -50,7 +49,6 @@ public class PerishableCargo extends Cargo {
 
             this.deteriorate();
             if (this.getMinsToPerish() <= 0) {
-                train.getLoadsOnTrain().remove(this);
                 return false;
             }
         }

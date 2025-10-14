@@ -1,8 +1,21 @@
-Week 1) Started of with creating entities Train and Station along with subclasses.
-Then implemented dependency between station and train, every station holds trains
+Week 1) 
 
-Then started to think about how train would move based on route constraints
-considered creating a class to manage where train is within its route.
+After reading the spec I focused on single entities including Train, and Station.
+I then also created their respective subclasses while noting differences from the super class.
+Each Train Type had a different speed, and Each Station Type has a maximum number of trains which I implemented.
+
+I changed Station to an abstract class as each station type can then implement addTrainsToStation while adhering to 
+constraints of maximum number of trains for each station type.
+
+I then thought about the relationships between Train and Station which are closely
+linked within this system. I realised that each Station must hold a particular number of Trains and therefore refers
+to a has-a relationship. 
+
+I then started to think about how to model routes within my design. I initially created a Route class which stores
+list of tracks, and stationIds to determine whether a route is linear of cyclical.
+
+After determining the type of route I then moved to train movement. As each train moves differently based on the 
+route type
 
 Cargo and Passenger Train had similar code for calculating the next station in linear route
 so continued to refactor and add more responsibility to route class
