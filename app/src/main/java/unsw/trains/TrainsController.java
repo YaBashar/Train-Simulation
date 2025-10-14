@@ -210,7 +210,8 @@ public class TrainsController {
 
     public void createPassenger(String startStationId, String destStationId, String passengerId) {
         Station startStation = getStationById(startStationId);
-        Load passenger = new Passenger(passengerId, startStationId, destStationId);
+        int passengerWeight = 70;
+        Load passenger = new Load(passengerId, passengerWeight, startStationId, destStationId, "Passenger");
 
         try {
             startStation.addLoadToStation(passenger);
@@ -221,7 +222,7 @@ public class TrainsController {
 
     public void createCargo(String startStationId, String destStationId, String cargoId, int weight) {
         Station startStation = getStationById(startStationId);
-        Load cargo = new Cargo(cargoId, startStationId, destStationId, weight);
+        Load cargo = new Load(cargoId, weight, startStationId, destStationId, "Cargo");
         try {
             startStation.addLoadToStation(cargo);
         } catch (UNSWException e) {

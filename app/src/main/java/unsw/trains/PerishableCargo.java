@@ -2,13 +2,12 @@ package unsw.trains;
 
 import unsw.utils.Position;
 
-public class PerishableCargo extends Cargo {
+public class PerishableCargo extends Load {
 
     private int minsToPerish;
 
     public PerishableCargo(String cargoId, String startStation, String destStation, int weight, int minsToPerish) {
-        super(cargoId, startStation, destStation, weight);
-        super.setType("PerishableCargo");
+        super(cargoId, weight, startStation, destStation, "PerishableCargo");
         this.minsToPerish = minsToPerish;
     }
 

@@ -1,7 +1,7 @@
 package unsw.trains;
 
 
-public abstract class Load {
+public class Load {
     
     private String loadId;
     private String type;
@@ -9,9 +9,10 @@ public abstract class Load {
     private String start;
     private String destination;
     
-    public Load(String loadId, int weight, String startStation, String destination) {
+    public Load(String loadId, int weight, String startStation, String destination, String type) {
         this.loadId = loadId;
         this.weight = weight;
+        this.type = type;
         this.destination = destination;
     }
 
