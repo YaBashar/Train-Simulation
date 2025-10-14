@@ -27,4 +27,14 @@ public class DepotStation extends Station {
     public void addLoadToStation(Load load) throws UNSWException {
         // leave empty or maybe throw exception.
     }
+
+    @Override
+    public void embarkLoads() {
+        // do nothing
+    }
+
+    @Override
+    public void disembark(List<Load> loadsOnTrain) {
+        //do nothing
+    }
 }

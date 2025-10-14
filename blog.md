@@ -78,3 +78,5 @@ Both Train and Station are abstract classes which contain abstract methods based
 LSP is adhered to with common behaviour defined within the superclass.
 Coupling is minimised as much as possible with coupling between Train -> Station and Station -> Route
 being necessary for this system.
+
+Another design choice I want to point out is in Depot Station which does not embark and disembark loads or adds load to station. I have these methods defined in the Station superclass which are then overriden to do nothing within Depot Station. I felt this approach was much more better than creating an interface and implementing the exact same logic for the other 3 same stations increasing repetition.
