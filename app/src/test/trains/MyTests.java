@@ -17,7 +17,7 @@ import unsw.utils.Position;
 
 // @Timeout(value = 5, unit = TimeUnit.SECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
 public class MyTests {
-    
+
     @Test public void getPassengerStationInfoWithTrains() {
         TrainsController controller = new TrainsController();
         controller.createStation("s1", "DepotStation", 1.0, 1.0);
@@ -38,7 +38,7 @@ public class MyTests {
                 new StationInfoResponse(
                     "s2",
                     "PassengerStation",
-                    new Position(10.0, 10.0), 
+                    new Position(10.0, 10.0),
                     List.of(new TrainInfoResponse("train1", "s2", "PassengerTrain", new Position(10.0, 10.0)))
                 ),
                 controller.getStationInfo("s2")
@@ -77,7 +77,7 @@ public class MyTests {
             new StationInfoResponse(
                 "s2",
                 "PassengerStation",
-                new Position(10.0, 10.0), 
+                new Position(10.0, 10.0),
                 List.of(new TrainInfoResponse("train1", "s2", "PassengerTrain", new Position(10.0, 10.0)),
                         new TrainInfoResponse("train2", "s2", "PassengerTrain", new Position(10.0, 10.0))
                 )
@@ -136,7 +136,7 @@ public class MyTests {
         );
     }
 
-    @Test public void BulletTrainCyclicalRoute() {
+    @Test public void bulletTrainCyclicalRoute() {
         TrainsController controller = new TrainsController();
         controller.createStation("s1", "CentralStation", 0.0, 0.0);
         controller.createStation("s2", "PassengerStation", 5.0, 0.0);
@@ -167,7 +167,7 @@ public class MyTests {
                 new StationInfoResponse(
                     "s1",
                     "CentralStation",
-                    new Position(0.0, 0.0), 
+                    new Position(0.0, 0.0),
                     List.of(new TrainInfoResponse("train1", "s1", "BulletTrain", new Position(0.0, 0.0)))
                 ),
                 controller.getStationInfo("s1")
@@ -194,12 +194,12 @@ public class MyTests {
         controller.simulate();
         assertEquals(new Position(10.0, 0.0), controller.getTrainInfo("train1").getPosition());
 
-        
+
         assertEquals(
                 new StationInfoResponse(
                     "s1",
                     "CentralStation",
-                    new Position(0.0, 0.0), 
+                    new Position(0.0, 0.0),
                     List.of()
                 ),
                 controller.getStationInfo("s1")
@@ -209,7 +209,7 @@ public class MyTests {
                 new StationInfoResponse(
                     "s2",
                     "PassengerStation",
-                    new Position(5.0, 0.0), 
+                    new Position(5.0, 0.0),
                     List.of()
                 ),
                 controller.getStationInfo("s2")
@@ -219,14 +219,14 @@ public class MyTests {
                 new StationInfoResponse(
                     "s3",
                     "PassengerStation",
-                    new Position(10.0, 0.0), 
+                    new Position(10.0, 0.0),
                     List.of(new TrainInfoResponse("train1", "s3", "BulletTrain", new Position(10.0, 0.0)))
                 ),
                 controller.getStationInfo("s3")
             );
     }
 
-    @Test public void InvalidRouteForTrain() {
+    @Test public void invalidRouteForTrain() {
         TrainsController controller = new TrainsController();
         controller.createStation("s1", "CentralStation", 0.0, 0.0);
         controller.createStation("s2", "PassengerStation", 5.0, 0.0);
@@ -312,7 +312,9 @@ public class MyTests {
         assertEquals(new Position(0.0, 0.0), controller.getTrainInfo("train1").getPosition());
 
         controller.simulate();
-        assertEquals(List.of(new LoadInfoResponse("c1", "Cargo"), new LoadInfoResponse("p1", "Passenger")), controller.getTrainInfo("train1").getLoads());
+        assertEquals(List.of(new LoadInfoResponse("c1", "Cargo"),
+        new LoadInfoResponse("p1", "Passenger")), controller.getTrainInfo("train1").getLoads());
+
         assertEquals(0, controller.getStationInfo("s1").getLoads().size());
 
         assertEquals(new Position(4.5, 0.0), controller.getTrainInfo("train1").getPosition());

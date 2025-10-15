@@ -1,14 +1,13 @@
 package unsw.trains;
 
-
 public class Load {
-    
+
     private String loadId;
     private String type;
     private int weight;
     private String start;
     private String destination;
-    
+
     public Load(String loadId, int weight, String startStation, String destination, String type) {
         this.loadId = loadId;
         this.weight = weight;

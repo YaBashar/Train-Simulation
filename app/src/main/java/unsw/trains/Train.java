@@ -1,15 +1,13 @@
 package unsw.trains;
 import java.util.ArrayList;
 import java.util.List;
-
 import unsw.utils.Position;
-
 
 public abstract class Train {
     private String trainId;
     private String type;
     private String start;
-    private String currentStation; 
+    private String currentStation;
     private Position currentPosition;
     private double speed;
     private boolean moveBackward;
@@ -19,8 +17,7 @@ public abstract class Train {
 
     private int totalCargoWeightOnBoard;
     private int totalWeightOnBoard;
-    
-    
+
     public Train(String trainId, String type, String stationId, Position pos, List<Station> stations) {
         this.trainId = trainId;
         this.type = type;
@@ -40,7 +37,7 @@ public abstract class Train {
     public abstract boolean canAcceptLoad(Load load);
 
     public void setNewPosition(Station currentStation, Station nextStation) {
-        
+
         currentStation.embarkLoads();
 
         Position nextStationPosition = nextStation.getPos();
@@ -64,8 +61,8 @@ public abstract class Train {
             nextStation.disembark(loadsOnTrain);
             route.updateRouteIndexOnArrival(this);
             this.setCurrentPosition(nextStationPosition);
-            this.setCurrentStation(nextStation.getStationId()); 
-            
+            this.setCurrentStation(nextStation.getStationId());
+
         } else {
             this.setCurrentPosition(destination);
         }
@@ -89,7 +86,7 @@ public abstract class Train {
         }
     }
 
-    
+
     // Getters and Setters
     public String getTrainId() {
         return trainId;

@@ -25,7 +25,7 @@ public class PerishableCargo extends Load {
 
 
     public boolean canTakePerishableCargo(Train train) {
-        
+
         Route route = train.getRoute();
         Position currentPosition = train.getCurrentPosition();
         String currentStation = train.getCurrentStation();
@@ -33,7 +33,7 @@ public class PerishableCargo extends Load {
         int startingRouteIndex = route.getRouteIndex();
 
         while (currentStation != this.getDestination()) {
-            
+
             Station nextStation = route.getNextStationLinearRoute(train);
             Position nextStationPosition = nextStation.getPos();
             Position destination = currentPosition.calculateNewPosition(nextStationPosition, train.getSpeed());

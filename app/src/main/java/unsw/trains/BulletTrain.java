@@ -5,10 +5,11 @@ import unsw.exceptions.InvalidRouteException;
 import unsw.utils.Position;
 
 public class BulletTrain extends Train implements CarriesCargo {
-   
+
     private final int maxWeightOnBoard = 5000;
-   
-    public BulletTrain(String trainId, String type, String stationId, Position pos, List<Station> stations) throws InvalidRouteException{
+
+    public BulletTrain(String trainId, String type, String stationId, Position pos, List<Station> stations)
+    throws InvalidRouteException {
         super(trainId, type, stationId, pos, stations);
         super.setSpeed(5.0);
     }
@@ -18,7 +19,7 @@ public class BulletTrain extends Train implements CarriesCargo {
 
         Route route = this.getRoute();
         Station nextStation = route.getNextStationLinearAndCyclicalRoute((Train) this);
-        super.setNewPosition(currentStation, nextStation);;
+        super.setNewPosition(currentStation, nextStation);
 
     }
 
@@ -71,8 +72,6 @@ public class BulletTrain extends Train implements CarriesCargo {
     public double recalculateSpeed(int totalCargoWeightOnBoard, double speed) {
         double slowDownFactor = (double) totalCargoWeightOnBoard * 0.01;
         double newSpeed = (100 - slowDownFactor) * speed / 100;
-        return newSpeed; 
+        return newSpeed;
     }
-   
-
 }

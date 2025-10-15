@@ -26,7 +26,6 @@ public abstract class Station {
     public abstract void addLoadToStation(Load load) throws UNSWException;
     public abstract void addTrainToStation(Train train) throws UNSWException;
 
-    
     public void embarkLoads() {
         List<Load> embarkedLoads = new ArrayList<>();
         trainsAtStation.sort(Comparator.comparing(Train:: getTrainId));
@@ -38,11 +37,11 @@ public abstract class Station {
                     train.getLoadsOnTrain().add(load);
                     embarkedLoads.add(load);
                 }
-            }    
+            }
         }
         this.loadsAtStation.removeAll(embarkedLoads);
     }
-    
+
     public void disembark(List<Load> loadsOnTrain) {
         List<Load> disembarkingLoads = new ArrayList<Load>();
         for (Load load: loadsOnTrain) {
@@ -51,17 +50,15 @@ public abstract class Station {
                 disembarkingLoads.add(load);
             }
         }
-        loadsOnTrain.removeAll(disembarkingLoads);    
+        loadsOnTrain.removeAll(disembarkingLoads);
     }
 
     public void removeTrainFromStation(Train train) {
         this.trainsAtStation.remove(train);
     }
-    
 
 
     // getters and setters
-    
     public String getStationId() {
         return stationId;
     }
@@ -103,5 +100,5 @@ public abstract class Station {
         return connectedTracks;
     }
 
-   
+
 }

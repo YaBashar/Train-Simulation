@@ -25,7 +25,7 @@ public class Route {
     }
 
 
-    
+
     // Methods
     public boolean isCyclical() {
         List<Station> stations = this.getStations();
@@ -33,7 +33,7 @@ public class Route {
         if (stations.size() < 3) {
             return false;
         }
-        
+
         // Wrapped in NullPointer try catch as track can equal null if not cyclical
         try {
 
@@ -42,26 +42,26 @@ public class Route {
 
             List<String> tracksAtFirstStation = firstStation.getConnectedTracks();
             List<String> tracksAtLastStation = lastStation.getConnectedTracks();
-            
+
             for (String trackId1 : tracksAtFirstStation) {
                 for (String trackId2 : tracksAtLastStation) {
                     if (trackId1.equals(trackId2)) {
                         return true;
                     }
-                } 
+                }
             }
 
         } catch (NullPointerException e) {
             return false;
         }
-        
+
         return false;
     }
 
     public boolean isLinear() {
         List<Station> stations = this.getStations();
 
-        if (stations.size() < 3 || this.isCyclical() == true) {
+        if (stations.size() < 3 || this.isCyclical()) {
             return false;
         }
 
@@ -72,8 +72,8 @@ public class Route {
     public int calculateNextIndexLinearRoute(Train train) {
         int currentIndex = this.getRouteIndex();
         int nextIndex = 0;
-        
-        if (train.isMoveBackward() == true) {
+
+        if (train.isMoveBackward()) {
             if (currentIndex > 0) {
                 nextIndex = currentIndex - 1;
 
@@ -105,7 +105,7 @@ public class Route {
     public int calculateNextIndexLinearAndCyclicalRoute(Train train) {
         int currentIndex = this.getRouteIndex();
         int nextIndex = 0;
-        
+
         if (this.isLinear()) {
             nextIndex = calculateNextIndexLinearRoute(train);
         } else {
@@ -124,7 +124,7 @@ public class Route {
         return nextStationId;
     }
 
-    
+
     public void updateRouteIndexOnArrival(Train train) {
         int nextIndex = 0;
         if (train instanceof PassengerTrain || train instanceof CargoTrain) {

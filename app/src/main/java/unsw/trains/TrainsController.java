@@ -63,7 +63,7 @@ public class TrainsController {
 
     public void createTrain(String trainId, String type, String stationId, List<String> route)
             throws InvalidRouteException {
-        
+
         Station startStation = getStationById(stationId);
 
         List<Station> stationsInRoute = new ArrayList<Station>();
@@ -74,7 +74,7 @@ public class TrainsController {
 
         Train train = null;
 
-        switch(type) {
+        switch (type) {
             case "PassengerTrain":
                 train = new PassengerTrain(trainId, type, stationId, startStation.getPos(), stationsInRoute);
                 trains.add(train);
@@ -136,7 +136,8 @@ public class TrainsController {
             loadInfos.add(loadInfo);
         }
 
-        TrainInfoResponse t = new TrainInfoResponse(trainId, findTrain.getCurrentStation(), findTrain.getType(), findTrain.getCurrentPosition(), loadInfos);
+        TrainInfoResponse t = new TrainInfoResponse(
+            trainId, findTrain.getCurrentStation(), findTrain.getType(), findTrain.getCurrentPosition(), loadInfos);
         return t;
     }
 
@@ -157,13 +158,15 @@ public class TrainsController {
             loadInfos.add(loadInfo);
         }
 
-        StationInfoResponse s = new StationInfoResponse(stationId, findStation.getType(), findStation.getPos(), loadInfos, trainInfos);
+        StationInfoResponse s = new StationInfoResponse(
+            stationId, findStation.getType(), findStation.getPos(), loadInfos, trainInfos);
         return s;
     }
 
     public TrackInfoResponse getTrackInfo(String trackId) {
         Track findTrack = getTrackById(trackId);
-        TrackInfoResponse t = new TrackInfoResponse(trackId, findTrack.getFromStationId(), findTrack.getToStationId(),  TrackType.NORMAL, 10);
+        TrackInfoResponse t = new TrackInfoResponse(
+            trackId, findTrack.getFromStationId(), findTrack.getToStationId(),  TrackType.NORMAL, 10);
         return t;
     }
 
@@ -179,7 +182,7 @@ public class TrainsController {
         return findStation;
     }
 
-    public Train getTrainById(String trainId) {   
+    public Train getTrainById(String trainId) {
         Train findTrain = null;
         for (Train train: trains) {
             if (train.getTrainId().equals(trainId)) {
@@ -246,7 +249,7 @@ public class TrainsController {
 
     public void createPerishableCargo(String startStationId, String destStationId, String cargoId, int weight,
             int minsTillPerish) {
-    
+
         Station startStation = getStationById(startStationId);
         Load perishableCargo = new PerishableCargo(cargoId, startStationId, destStationId, weight, minsTillPerish);
 
@@ -262,6 +265,6 @@ public class TrainsController {
     }
 
     public void createPassenger(String startStationId, String destStationId, String passengerId, boolean isMechanic) {
-        
+
     }
 }
