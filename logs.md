@@ -5,7 +5,7 @@ Yes
 Yes
 #### Test D-0 "DryRun Compilation": PASS
 ```
-SUCCESS: Executed 0 tests in 595ms
+SUCCESS: Executed 0 tests in 553ms
 
 SUCCESS
 ```
@@ -15,7 +15,7 @@ automarking.dryrun.TaskAExampleTests
 
   Test testCreateStations() PASSED
 
-SUCCESS: Executed 1 tests in 600ms
+SUCCESS: Executed 1 tests in 455ms
 
 SUCCESS
 ```
@@ -25,7 +25,7 @@ automarking.dryrun.TaskAExampleTests
 
   Test testCreateTracks() PASSED
 
-SUCCESS: Executed 1 tests in 588ms
+SUCCESS: Executed 1 tests in 364ms
 
 SUCCESS
 ```
@@ -35,7 +35,7 @@ automarking.dryrun.TaskAExampleTests
 
   Test testCreateTrains() PASSED
 
-SUCCESS: Executed 1 tests in 591ms
+SUCCESS: Executed 1 tests in 431ms
 
 SUCCESS
 ```
@@ -45,7 +45,7 @@ automarking.dryrun.TaskAExampleTests
 
   Test testMultipleControllers() PASSED
 
-SUCCESS: Executed 1 tests in 680ms
+SUCCESS: Executed 1 tests in 444ms
 
 SUCCESS
 ```
@@ -55,7 +55,7 @@ automarking.dryrun.TaskBExampleTests
 
   Test testSimpleMovement() PASSED
 
-SUCCESS: Executed 1 tests in 585ms
+SUCCESS: Executed 1 tests in 466ms
 
 SUCCESS
 ```
@@ -65,7 +65,7 @@ automarking.dryrun.TaskBExampleTests
 
   Test testCreateDifferentPassengersAndCargo() PASSED
 
-SUCCESS: Executed 1 tests in 560ms
+SUCCESS: Executed 1 tests in 433ms
 
 SUCCESS
 ```
@@ -75,7 +75,7 @@ automarking.dryrun.TaskBExampleTests
 
   Test testTrainPicksUpPassenger() PASSED
 
-SUCCESS: Executed 1 tests in 574ms
+SUCCESS: Executed 1 tests in 415ms
 
 SUCCESS
 ```
@@ -85,7 +85,7 @@ automarking.dryrunModified.TaskAExampleTests
 
   Test testCreateStations() PASSED
 
-SUCCESS: Executed 1 tests in 579ms
+SUCCESS: Executed 1 tests in 314ms
 
 SUCCESS
 ```
@@ -95,7 +95,7 @@ automarking.dryrunModified.TaskAExampleTests
 
   Test testCreateTracks() PASSED
 
-SUCCESS: Executed 1 tests in 567ms
+SUCCESS: Executed 1 tests in 307ms
 
 SUCCESS
 ```
@@ -105,7 +105,7 @@ automarking.dryrunModified.TaskAExampleTests
 
   Test testCreateTrains() PASSED
 
-SUCCESS: Executed 1 tests in 587ms
+SUCCESS: Executed 1 tests in 375ms
 
 SUCCESS
 ```
@@ -115,7 +115,7 @@ automarking.dryrunModified.TaskAExampleTests
 
   Test testMultipleControllers() PASSED
 
-SUCCESS: Executed 1 tests in 594ms
+SUCCESS: Executed 1 tests in 382ms
 
 SUCCESS
 ```
@@ -125,7 +125,7 @@ automarking.dryrunModified.TaskBExampleTests
 
   Test testSimpleMovement() PASSED
 
-SUCCESS: Executed 1 tests in 709ms
+SUCCESS: Executed 1 tests in 400ms
 
 SUCCESS
 ```
@@ -135,7 +135,7 @@ automarking.dryrunModified.TaskBExampleTests
 
   Test testCreateDifferentPassengersAndCargo() PASSED
 
-SUCCESS: Executed 1 tests in 582ms
+SUCCESS: Executed 1 tests in 363ms
 
 SUCCESS
 ```
@@ -145,7 +145,7 @@ automarking.dryrunModified.TaskBExampleTests
 
   Test testTrainPicksUpPassenger() PASSED
 
-SUCCESS: Executed 1 tests in 604ms
+SUCCESS: Executed 1 tests in 462ms
 
 SUCCESS
 ```
@@ -155,7 +155,7 @@ automarking.taskA.BasicCreationTest
 
   Test Test create train on linear route PASSED
 
-SUCCESS: Executed 1 tests in 595ms
+SUCCESS: Executed 1 tests in 451ms
 
 SUCCESS
 ```
@@ -165,7 +165,7 @@ automarking.taskA.BasicCreationTest
 
   Test Test create train on cyclical routes PASSED
 
-SUCCESS: Executed 1 tests in 1.1s
+SUCCESS: Executed 1 tests in 429ms
 
 SUCCESS
 ```
@@ -175,7 +175,7 @@ automarking.taskA.BasicCreationTest
 
   Test Test create train on more complex cyclical routes PASSED
 
-SUCCESS: Executed 1 tests in 588ms
+SUCCESS: Executed 1 tests in 341ms
 
 SUCCESS
 ```
@@ -185,7 +185,7 @@ automarking.taskA.BasicCreationTest
 
   Test Test create train on more complex linear routes PASSED
 
-SUCCESS: Executed 1 tests in 576ms
+SUCCESS: Executed 1 tests in 474ms
 
 SUCCESS
 ```
@@ -195,7 +195,7 @@ automarking.taskA.BasicCreationTest
 
   Test Test listStationIds PASSED
 
-SUCCESS: Executed 1 tests in 562ms
+SUCCESS: Executed 1 tests in 340ms
 
 SUCCESS
 ```
@@ -205,7 +205,7 @@ automarking.taskA.BasicCreationTest
 
   Test Test listTrackIds PASSED
 
-SUCCESS: Executed 1 tests in 582ms
+SUCCESS: Executed 1 tests in 417ms
 
 SUCCESS
 ```
@@ -215,7 +215,7 @@ automarking.taskA.BasicCreationTest
 
   Test Test listTrainIDs PASSED
 
-SUCCESS: Executed 1 tests in 571ms
+SUCCESS: Executed 1 tests in 524ms
 
 SUCCESS
 ```
@@ -225,7 +225,7 @@ automarking.taskA.BasicCreationTest
 
   Test Test tracks function bidirectionally for linear tracks PASSED
 
-SUCCESS: Executed 1 tests in 585ms
+SUCCESS: Executed 1 tests in 514ms
 
 SUCCESS
 ```
@@ -235,7 +235,7 @@ automarking.taskA.BasicCreationTest
 
   Test Test tracks function bidirectionally for cyclical routes PASSED
 
-SUCCESS: Executed 1 tests in 651ms
+SUCCESS: Executed 1 tests in 480ms
 
 SUCCESS
 ```
@@ -245,7 +245,7 @@ automarking.taskB.LoadsTests
 
   Test Test passenger creation at passenger stations PASSED
 
-SUCCESS: Executed 1 tests in 580ms
+SUCCESS: Executed 1 tests in 424ms
 
 SUCCESS
 ```
@@ -255,7 +255,7 @@ automarking.taskB.LoadsTests
 
   Test Test cargo creation at cargo stations PASSED
 
-SUCCESS: Executed 1 tests in 554ms
+SUCCESS: Executed 1 tests in 603ms
 
 SUCCESS
 ```
@@ -265,7 +265,7 @@ automarking.taskB.LoadsTests
 
   Test Test cargo and passenger creation at central stations PASSED
 
-SUCCESS: Executed 1 tests in 538ms
+SUCCESS: Executed 1 tests in 704ms
 
 SUCCESS
 ```
@@ -275,7 +275,7 @@ automarking.taskB.LoadsTests
 
   Test Test load taken to destination on linear route PASSED
 
-SUCCESS: Executed 1 tests in 570ms
+SUCCESS: Executed 1 tests in 387ms
 
 SUCCESS
 ```
@@ -289,7 +289,7 @@ automarking.taskB.LoadsTests
       at app//automarking.taskB.LoadsTests.loadTakenOnCyclicalRoute(LoadsTests.java:155)
 
 
-FAILURE: Executed 1 tests in 594ms (1 failed)
+FAILURE: Executed 1 tests in 538ms (1 failed)
 
 FAILURE
 ```
@@ -303,7 +303,7 @@ automarking.taskB.LoadsTests
       at app//automarking.taskB.LoadsTests.correctLoadsTaken(LoadsTests.java:196)
 
 
-FAILURE: Executed 1 tests in 588ms (1 failed)
+FAILURE: Executed 1 tests in 469ms (1 failed)
 
 FAILURE
 ```
@@ -317,7 +317,7 @@ automarking.taskB.LoadsTests
       at app//automarking.taskB.LoadsTests.correctLoadsTakenCyclical(LoadsTests.java:226)
 
 
-FAILURE: Executed 1 tests in 578ms (1 failed)
+FAILURE: Executed 1 tests in 421ms (1 failed)
 
 FAILURE
 ```
@@ -327,7 +327,7 @@ automarking.taskB.LoadsTests
 
   Test Test PassengerTrain only picks up passengers PASSED
 
-SUCCESS: Executed 1 tests in 579ms
+SUCCESS: Executed 1 tests in 429ms
 
 SUCCESS
 ```
@@ -337,7 +337,7 @@ automarking.taskB.LoadsTests
 
   Test Test CargoTrain only picks up cargo PASSED
 
-SUCCESS: Executed 1 tests in 559ms
+SUCCESS: Executed 1 tests in 418ms
 
 SUCCESS
 ```
@@ -347,7 +347,7 @@ automarking.taskB.LoadsTests
 
   Test Test CargoTrain only picks up cargo PASSED
 
-SUCCESS: Executed 1 tests in 596ms
+SUCCESS: Executed 1 tests in 429ms
 
 SUCCESS
 ```
@@ -357,7 +357,7 @@ automarking.taskB.LoadsTests
 
   Test Test load capacity of passenger trains PASSED
 
-SUCCESS: Executed 1 tests in 572ms
+SUCCESS: Executed 1 tests in 394ms
 
 SUCCESS
 ```
@@ -371,7 +371,7 @@ automarking.taskB.LoadsTests
       at app//automarking.taskB.LoadsTests.testCapacityOfCargoTrains(LoadsTests.java:361)
 
 
-FAILURE: Executed 1 tests in 604ms (1 failed)
+FAILURE: Executed 1 tests in 438ms (1 failed)
 
 FAILURE
 ```
@@ -385,7 +385,7 @@ automarking.taskB.LoadsTests
       at app//automarking.taskB.LoadsTests.testCapacityOfBulletTrains(LoadsTests.java:388)
 
 
-FAILURE: Executed 1 tests in 586ms (1 failed)
+FAILURE: Executed 1 tests in 486ms (1 failed)
 
 FAILURE
 ```
@@ -399,7 +399,7 @@ automarking.taskB.LoadsTests
       at app//automarking.taskB.LoadsTests.testLoadSlowingCargoTrains(LoadsTests.java:418)
 
 
-FAILURE: Executed 1 tests in 599ms (1 failed)
+FAILURE: Executed 1 tests in 408ms (1 failed)
 
 FAILURE
 ```
@@ -413,7 +413,7 @@ automarking.taskB.LoadsTests
       at app//automarking.taskB.LoadsTests.testLoadSlowingBulletTrains(LoadsTests.java:448)
 
 
-FAILURE: Executed 1 tests in 596ms (1 failed)
+FAILURE: Executed 1 tests in 431ms (1 failed)
 
 FAILURE
 ```
@@ -427,7 +427,7 @@ automarking.taskB.LoadsTests
       at app//automarking.taskB.LoadsTests.priorityOfLoading(LoadsTests.java:488)
 
 
-FAILURE: Executed 1 tests in 723ms (1 failed)
+FAILURE: Executed 1 tests in 433ms (1 failed)
 
 FAILURE
 ```
@@ -441,7 +441,7 @@ automarking.taskB.MovementTests
       at app//automarking.taskB.MovementTests.passengerTrainMovement(MovementTests.java:40)
 
 
-FAILURE: Executed 1 tests in 689ms (1 failed)
+FAILURE: Executed 1 tests in 452ms (1 failed)
 
 FAILURE
 ```
@@ -455,7 +455,7 @@ automarking.taskB.MovementTests
       at app//automarking.taskB.MovementTests.cargoTrainMovement(MovementTests.java:67)
 
 
-FAILURE: Executed 1 tests in 603ms (1 failed)
+FAILURE: Executed 1 tests in 378ms (1 failed)
 
 FAILURE
 ```
@@ -469,7 +469,7 @@ automarking.taskB.MovementTests
       at app//automarking.taskB.MovementTests.bulletTrainMovement(MovementTests.java:95)
 
 
-FAILURE: Executed 1 tests in 639ms (1 failed)
+FAILURE: Executed 1 tests in 456ms (1 failed)
 
 FAILURE
 ```
@@ -479,7 +479,7 @@ automarking.taskB.MovementTests
 
   Test Test train docks at station from being inbound on a track prior PASSED
 
-SUCCESS: Executed 1 tests in 571ms
+SUCCESS: Executed 1 tests in 482ms
 
 SUCCESS
 ```
@@ -489,7 +489,7 @@ automarking.taskB.MovementTests
 
   Test Test train docks at station from being inbound on a station prior PASSED
 
-SUCCESS: Executed 1 tests in 599ms
+SUCCESS: Executed 1 tests in 486ms
 
 SUCCESS
 ```
@@ -503,7 +503,7 @@ automarking.taskB.MovementTests
       at app//automarking.taskB.MovementTests.bulletTrainCyclicalMovement(MovementTests.java:173)
 
 
-FAILURE: Executed 1 tests in 637ms (1 failed)
+FAILURE: Executed 1 tests in 487ms (1 failed)
 
 FAILURE
 ```
@@ -517,7 +517,7 @@ automarking.taskB.MovementTests
       at app//automarking.taskB.MovementTests.passengerTrainLinearReverseMovement(MovementTests.java:227)
 
 
-FAILURE: Executed 1 tests in 619ms (1 failed)
+FAILURE: Executed 1 tests in 498ms (1 failed)
 
 FAILURE
 ```
@@ -531,7 +531,7 @@ automarking.taskB.MovementTests
       at app//automarking.taskB.MovementTests.trainMovementWhenCreatedMidLinearRoute(MovementTests.java:271)
 
 
-FAILURE: Executed 1 tests in 585ms (1 failed)
+FAILURE: Executed 1 tests in 431ms (1 failed)
 
 FAILURE
 ```
@@ -545,7 +545,7 @@ automarking.taskB.MovementTests
       at app//automarking.taskB.MovementTests.trainMovementWhenCreatedMidCyclicalRoute(MovementTests.java:319)
 
 
-FAILURE: Executed 1 tests in 623ms (1 failed)
+FAILURE: Executed 1 tests in 406ms (1 failed)
 
 FAILURE
 ```
@@ -559,7 +559,7 @@ automarking.taskB.MovementTests
       at app//automarking.taskB.MovementTests.linearMovementDifferentRanges(MovementTests.java:381)
 
 
-FAILURE: Executed 1 tests in 634ms (1 failed)
+FAILURE: Executed 1 tests in 443ms (1 failed)
 
 FAILURE
 ```
@@ -569,7 +569,7 @@ automarking.taskB.MovementTests
 
   Test Test prioritisation with 4 inbound trains, trying to docking an empty station with 2 train capacity PASSED
 
-SUCCESS: Executed 1 tests in 680ms
+SUCCESS: Executed 1 tests in 438ms
 
 SUCCESS
 ```
@@ -579,7 +579,7 @@ automarking.taskB.MovementTests
 
   Test Test trains prioritised, causing a train at a station from a prior tick to block an inbound train PASSED
 
-SUCCESS: Executed 1 tests in 557ms
+SUCCESS: Executed 1 tests in 454ms
 
 SUCCESS
 ```
@@ -593,7 +593,7 @@ automarking.taskB.MovementTests
       at app//automarking.taskB.MovementTests.trainsDeadlockedTest(MovementTests.java:506)
 
 
-FAILURE: Executed 1 tests in 570ms (1 failed)
+FAILURE: Executed 1 tests in 460ms (1 failed)
 
 FAILURE
 ```
@@ -607,7 +607,7 @@ automarking.taskB.MovementTests
       at app//automarking.taskB.MovementTests.allTrainsDeadlockedTest(MovementTests.java:566)
 
 
-FAILURE: Executed 1 tests in 570ms (1 failed)
+FAILURE: Executed 1 tests in 302ms (1 failed)
 
 FAILURE
 ```
@@ -621,7 +621,7 @@ automarking.taskB.PerishableLoadTest
       at app//automarking.taskB.PerishableLoadTest.testPerishableLoadPickedUp(PerishableLoadTest.java:46)
 
 
-FAILURE: Executed 1 tests in 544ms (1 failed)
+FAILURE: Executed 1 tests in 256ms (1 failed)
 
 FAILURE
 ```
@@ -635,7 +635,7 @@ automarking.taskB.PerishableLoadTest
       at app//automarking.taskB.PerishableLoadTest.testPickedUpInCyclicalRoute(PerishableLoadTest.java:106)
 
 
-FAILURE: Executed 1 tests in 560ms (1 failed)
+FAILURE: Executed 1 tests in 345ms (1 failed)
 
 FAILURE
 ```
@@ -649,7 +649,7 @@ automarking.taskB.PerishableLoadTest
       at app//automarking.taskB.PerishableLoadTest.testPerishableLoadNotPickedUp(PerishableLoadTest.java:137)
 
 
-FAILURE: Executed 1 tests in 560ms (1 failed)
+FAILURE: Executed 1 tests in 403ms (1 failed)
 
 FAILURE
 ```
@@ -663,7 +663,7 @@ automarking.taskB.PerishableLoadTest
       at app//automarking.taskB.PerishableLoadTest.testNotPickedUpInCyclicalRoute(PerishableLoadTest.java:182)
 
 
-FAILURE: Executed 1 tests in 587ms (1 failed)
+FAILURE: Executed 1 tests in 392ms (1 failed)
 
 FAILURE
 ```
@@ -673,7 +673,7 @@ automarking.taskB.PerishableLoadTest
 
   Test Test perishable cargo pickp accounts for cargo slow down PASSED
 
-SUCCESS: Executed 1 tests in 543ms
+SUCCESS: Executed 1 tests in 429ms
 
 SUCCESS
 ```
@@ -687,7 +687,7 @@ automarking.taskB.PerishableLoadTest
       at app//automarking.taskB.PerishableLoadTest.pickupLaterSlowdown(PerishableLoadTest.java:243)
 
 
-FAILURE: Executed 1 tests in 537ms (1 failed)
+FAILURE: Executed 1 tests in 406ms (1 failed)
 
 FAILURE
 ```
@@ -701,7 +701,7 @@ automarking.taskB.PerishableLoadTest
       at app//automarking.taskB.PerishableLoadTest.perishableCargoReverseSectionOfLinearRoute(PerishableLoadTest.java:300)
 
 
-FAILURE: Executed 1 tests in 598ms (1 failed)
+FAILURE: Executed 1 tests in 389ms (1 failed)
 
 FAILURE
 ```
@@ -715,7 +715,7 @@ automarking.taskC.BreakingAndRepairing
       at automarking.taskC.BreakingAndRepairing.testSimpleBreakingOfTrackWithOneTrain(BreakingAndRepairing.java:42)
 
 
-FAILURE: Executed 1 tests in 603ms (1 failed)
+FAILURE: Executed 1 tests in 418ms (1 failed)
 
 FAILURE
 ```
@@ -729,7 +729,7 @@ automarking.taskC.BreakingAndRepairing
       at automarking.taskC.BreakingAndRepairing.simpleRepairingofTrack(BreakingAndRepairing.java:77)
 
 
-FAILURE: Executed 1 tests in 640ms (1 failed)
+FAILURE: Executed 1 tests in 447ms (1 failed)
 
 FAILURE
 ```
@@ -743,7 +743,7 @@ automarking.taskC.BreakingAndRepairing
       at automarking.taskC.BreakingAndRepairing.testUsesDurabilityBasedOnLoadWeight(BreakingAndRepairing.java:131)
 
 
-FAILURE: Executed 1 tests in 582ms (1 failed)
+FAILURE: Executed 1 tests in 362ms (1 failed)
 
 FAILURE
 ```
@@ -757,7 +757,7 @@ automarking.taskC.BreakingAndRepairing
       at automarking.taskC.BreakingAndRepairing.damageOnTrackAcrossMultipleTracks(BreakingAndRepairing.java:173)
 
 
-FAILURE: Executed 1 tests in 578ms (1 failed)
+FAILURE: Executed 1 tests in 404ms (1 failed)
 
 FAILURE
 ```
@@ -771,7 +771,7 @@ automarking.taskC.BreakingAndRepairing
       at automarking.taskC.BreakingAndRepairing.trainsCantMoveOnBrokenTracks(BreakingAndRepairing.java:220)
 
 
-FAILURE: Executed 1 tests in 628ms (1 failed)
+FAILURE: Executed 1 tests in 441ms (1 failed)
 
 FAILURE
 ```
@@ -785,7 +785,7 @@ automarking.taskC.BreakingAndRepairing
       at automarking.taskC.BreakingAndRepairing.trains(BreakingAndRepairing.java:289)
 
 
-FAILURE: Executed 1 tests in 564ms (1 failed)
+FAILURE: Executed 1 tests in 401ms (1 failed)
 
 FAILURE
 ```
@@ -799,7 +799,7 @@ automarking.taskC.BreakingAndRepairing
       at automarking.taskC.BreakingAndRepairing.testAllTrainsMoveInTickBeforeBreaking(BreakingAndRepairing.java:345)
 
 
-FAILURE: Executed 1 tests in 574ms (1 failed)
+FAILURE: Executed 1 tests in 404ms (1 failed)
 
 FAILURE
 ```
@@ -813,7 +813,7 @@ automarking.taskC.BreakingAndRepairing
       at automarking.taskC.BreakingAndRepairing.trainsStcuukDontTakeLoads(BreakingAndRepairing.java:382)
 
 
-FAILURE: Executed 1 tests in 578ms (1 failed)
+FAILURE: Executed 1 tests in 431ms (1 failed)
 
 FAILURE
 ```
@@ -827,7 +827,7 @@ automarking.taskC.RepairTrainAndMechanics
       at automarking.taskC.RepairTrainAndMechanics.repairTrainDoesntDamageNormalTrack(RepairTrainAndMechanics.java:39)
 
 
-FAILURE: Executed 1 tests in 605ms (1 failed)
+FAILURE: Executed 1 tests in 437ms (1 failed)
 
 FAILURE
 ```
@@ -841,7 +841,7 @@ automarking.taskC.RepairTrainAndMechanics
       at automarking.taskC.RepairTrainAndMechanics.repairTrainDoesntDamageBreakableTrack(RepairTrainAndMechanics.java:64)
 
 
-FAILURE: Executed 1 tests in 595ms (1 failed)
+FAILURE: Executed 1 tests in 400ms (1 failed)
 
 FAILURE
 ```
@@ -855,7 +855,7 @@ automarking.taskC.RepairTrainAndMechanics
       at automarking.taskC.RepairTrainAndMechanics.repairTrainMoveOnBrokenTrack(RepairTrainAndMechanics.java:92)
 
 
-FAILURE: Executed 1 tests in 581ms (1 failed)
+FAILURE: Executed 1 tests in 534ms (1 failed)
 
 FAILURE
 ```
@@ -869,7 +869,7 @@ automarking.taskC.RepairTrainAndMechanics
       at automarking.taskC.RepairTrainAndMechanics.repairTrainPicksUpPassengersAndMechanics(RepairTrainAndMechanics.java:141)
 
 
-FAILURE: Executed 1 tests in 612ms (1 failed)
+FAILURE: Executed 1 tests in 489ms (1 failed)
 
 FAILURE
 ```
@@ -883,7 +883,7 @@ automarking.taskC.RepairTrainAndMechanics
       at automarking.taskC.RepairTrainAndMechanics.repairTrainOneMechanic(RepairTrainAndMechanics.java:168)
 
 
-FAILURE: Executed 1 tests in 744ms (1 failed)
+FAILURE: Executed 1 tests in 353ms (1 failed)
 
 FAILURE
 ```
@@ -897,7 +897,7 @@ automarking.taskC.RepairTrainAndMechanics
       at automarking.taskC.RepairTrainAndMechanics.repairBoostWHenInbound(RepairTrainAndMechanics.java:191)
 
 
-FAILURE: Executed 1 tests in 702ms (1 failed)
+FAILURE: Executed 1 tests in 551ms (1 failed)
 
 FAILURE
 ```
@@ -911,7 +911,7 @@ automarking.taskC.RepairTrainAndMechanics
       at automarking.taskC.RepairTrainAndMechanics.repairTrainThreeMechanics(RepairTrainAndMechanics.java:234)
 
 
-FAILURE: Executed 1 tests in 750ms (1 failed)
+FAILURE: Executed 1 tests in 341ms (1 failed)
 
 FAILURE
 ```
@@ -925,7 +925,7 @@ automarking.taskC.RepairTrainAndMechanics
       at automarking.taskC.RepairTrainAndMechanics.inboundFromStationMechanics(RepairTrainAndMechanics.java:260)
 
 
-FAILURE: Executed 1 tests in 797ms (1 failed)
+FAILURE: Executed 1 tests in 474ms (1 failed)
 
 FAILURE
 ```
